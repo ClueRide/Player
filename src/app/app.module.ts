@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { ComponentsModule } from 'front-end-common';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
@@ -18,6 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    ComponentsModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

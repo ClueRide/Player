@@ -1,9 +1,13 @@
 {
-  "name": "crPlayer",
+  "name": "cr-player",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "homepage": "https://clueride.com/",
+  "description": "Clue Ride Game App",
   "private": true,
+  "config": {
+    "ionic_webpack": "config/webpack.config.js",
+    "ionic_watch": "config/watch.config.js"
+  },
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
@@ -31,8 +35,9 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
+    "@angular/cli": "^1.6.3",
     "@ionic/app-scripts": "3.1.0",
+    "awesome-typescript-loader": "file:node_modules/awesome-typescript-loader",
     "typescript": "2.4.2"
-  },
-  "description": "An Ionic project"
+  }
 }
