@@ -1,11 +1,13 @@
+import Auth0Cordova from '@auth0/cordova';
+import {AuthService} from "../../../front-end-common/src/providers/auth/auth.service";
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { TokenService, RegistrationPage } from 'front-end-common';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import {RegistrationPage} from "../../../front-end-common/index";
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +23,7 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public tokenService: TokenService,
+    public authService: AuthService,
   ) {
     this.initializeApp();
 
@@ -39,6 +41,11 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      /* Handles the return to the app after logging in at external site. */
+      (<any>window).handleOpenURL = (url) => {
+        Auth0Cordova.onRedirectUri(url);
+      }
     });
   }
 
@@ -51,12 +58,15 @@ export class MyApp {
   ngOnInit() {
     console.log("App is initialized");
     /* This is dependent on the loadToken having been run (promise resolved) as the initialization of the app. */
-    if (this.tokenService.isGuest()) {
+    //TODO: this is intentionally backwards until proper logic is in place
+    // if (this.authService.isAuthenticated()) {
+    if (!this.authService.isAuthenticated()) {
+      // console.log("1. App is Registered as " + this.tokenService.getPrincipalName());
+      console.log("1. App is Registered as [TBD]");
+      this.rootPage = HomePage;
+    } else {
       console.log("1. App is Unregistered");
       this.rootPage = RegistrationPage;
-    } else {
-      console.log("1. App is Registered as " + this.tokenService.getPrincipalName());
-      this.rootPage = HomePage;
     }
   }
 
