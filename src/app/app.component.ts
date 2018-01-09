@@ -1,5 +1,5 @@
 import Auth0Cordova from '@auth0/cordova';
-import {AuthService} from "../../../front-end-common/src/providers/auth/auth.service";
+import { AuthService, RegistrationPage } from "front-end-common";
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import {RegistrationPage} from "../../../front-end-common/index";
+import {ProfileService} from "../../../front-end-common/src/providers/profile/profile.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -24,6 +24,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public authService: AuthService,
+    public profileService: ProfileService,
   ) {
     this.initializeApp();
 
@@ -58,11 +59,8 @@ export class MyApp {
   ngOnInit() {
     console.log("App is initialized");
     /* This is dependent on the loadToken having been run (promise resolved) as the initialization of the app. */
-    //TODO: this is intentionally backwards until proper logic is in place
-    // if (this.authService.isAuthenticated()) {
-    if (!this.authService.isAuthenticated()) {
-      // console.log("1. App is Registered as " + this.tokenService.getPrincipalName());
-      console.log("1. App is Registered as [TBD]");
+    if (this.authService.isAuthenticated()) {
+      console.log("1. App is Registered under " + this.profileService.getPrincipal());
       this.rootPage = HomePage;
     } else {
       console.log("1. App is Unregistered");
