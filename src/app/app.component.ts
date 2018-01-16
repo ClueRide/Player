@@ -31,7 +31,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'List', component: ListPage },
     ];
 
   }
@@ -59,12 +59,12 @@ export class MyApp {
   ngOnInit() {
     console.log("App is initialized");
     /* This is dependent on the loadToken having been run (promise resolved) as the initialization of the app. */
+    this.nav.setRoot(HomePage);
     if (this.authService.isAuthenticated()) {
       console.log("1. App is Registered under " + this.profileService.getPrincipal());
-      this.rootPage = HomePage;
     } else {
       console.log("1. App is Unregistered");
-      this.rootPage = RegistrationPage;
+      this.nav.push(RegistrationPage);
     }
   }
 
