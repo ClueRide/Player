@@ -1,12 +1,12 @@
-import Auth0Cordova from '@auth0/cordova';
-import { AuthService, RegistrationPage } from "front-end-common";
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import Auth0Cordova from "@auth0/cordova";
+import {AuthService, RegistrationPage} from "front-end-common";
+import {Component, ViewChild} from "@angular/core";
+import {Nav, Platform} from "ionic-angular";
+import {StatusBar} from "@ionic-native/status-bar";
+import {SplashScreen} from "@ionic-native/splash-screen";
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import {HomePage} from "../pages/home/home";
+import {ListPage} from "../pages/list/list";
 import {ProfileService} from "../../../front-end-common/src/providers/profile/profile.service";
 
 @Component({
