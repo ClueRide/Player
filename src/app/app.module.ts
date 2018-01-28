@@ -11,19 +11,23 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {TeamPage} from "../pages/team/team";
 import {OutingPage} from "../pages/outing/outing";
 import {BadgesPage} from "../pages/badges/badges";
+import {SummaryComponentsModule} from "../components/components.module";
+import {OutingPageModule} from "../pages/outing/outing.module";
+import {BadgesPageModule} from "../pages/badges/badges.module";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     TeamPage,
-    OutingPage,
-    BadgesPage,
   ],
   imports: [
+    BadgesPageModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     ComponentsModule.forRoot(),
+    OutingPageModule,
+    SummaryComponentsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
