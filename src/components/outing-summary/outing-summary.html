@@ -1,0 +1,16 @@
+<!-- Generated template for the OutingSummaryComponent component -->
+<div class="outing-summary">
+  <div class="section-heading">Outing</div>
+  <div class="course-name">
+    <a href="https://www.clueride.com/{{outing.course.url}}">{{outing.course.name}}</a>
+  </div>
+  <div class="date">
+    Date: {{outing.date}}
+  </div>
+  <div class="time">
+    Time: {{outing.time}}
+  </div>
+  <div>
+    <a (click)="viewDetails()">View Outing Details</a>
+  </div>
+</div>

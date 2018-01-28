@@ -13,4 +13,27 @@
 //
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+
+.scroll-content {
+  background-image: linear-gradient(to bottom, #7FFFFF 0%, #BFFFFF 51%);
+}
+
+.section-heading {
+  font-size: large;
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+@media handheld {
+  .banner-image {
+    display: block;
+    margin: auto;
+  }
+}
+
+@media screen {
+
+}
+
+

@@ -1,0 +1,11 @@
+<!-- Generated template for the ProfileSummaryComponent component -->
+<div class="section-heading">Registered as</div>
+<div class="profile-summary">
+  <div class="user-image">
+    <img [src] = "profile.getUserImageUrl()">
+  </div>
+  <div class="name">
+    {{profile.getFullName()}}<br>
+    {{profile.getPrincipal()}}
+  </div>
+</div>

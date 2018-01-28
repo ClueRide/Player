@@ -8,23 +8,21 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-
-  <div>
-    <img [src] = "profile.getUserImageUrl()">
+  <div class="banner-image">
+  <img src="https://www.clueride.com/wp-content/uploads/2017/01/clueRideBanner-250x50.png">
   </div>
 
-  <div>
-    <button ion-button (click) = "auth.logout()">De-Register</button>
+  <outing-summary></outing-summary>
+
+  <profile-summary></profile-summary>
+
+  <badge-summary></badge-summary>
+
+  <begin-game></begin-game>
+
+  <div id="bdd-only" [hidden]="!auth.runningLocal()">
+    <div class="section-heading">Test Only</div>
+    <button class="bdd-only" ion-button (click) = "auth.logout()">De-Register</button>
   </div>
 
-  <div>
-    Badge List: {{badges}}
-  </div>
 </ion-content>
