@@ -14,12 +14,12 @@ import {BadgesPage} from "../pages/badges/badges";
 import {SummaryComponentsModule} from "../components/components.module";
 import {OutingPageModule} from "../pages/outing/outing.module";
 import {BadgesPageModule} from "../pages/badges/badges.module";
+import {TeamPageModule} from "../pages/team/team.module";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    TeamPage,
   ],
   imports: [
     BadgesPageModule,
@@ -28,6 +28,7 @@ import {BadgesPageModule} from "../pages/badges/badges.module";
     ComponentsModule.forRoot(),
     OutingPageModule,
     SummaryComponentsModule,
+    TeamPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

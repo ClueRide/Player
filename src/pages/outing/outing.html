@@ -17,5 +17,31 @@
 
 
 <ion-content padding>
+  <div class="section-heading">
+    Outing
+  </div>
+  <div>
+    Course Name: <a href="https://www.clueride.com/{{outing.course.url}}">{{outing.course.name}}</a>
+  </div>
+  <div>
+    Date: {{outing.date}}
+  </div>
+  <div>
+    Time: {{outing.time}}
+  </div>
+  <div class="section-button-right">
+    <button ion-button (click)="addToCalendar()">Add to Calendar</button>
+  </div>
+
+  <div class="section-heading">
+    Team
+  </div>
+  <div>
+    <a (click)="showTeam()">{{outing.team.name}}</a>
+  </div>
+
+  <pinned-map class="map-content" [pin]=outing.course.startPin></pinned-map>
+
+  <begin-game></begin-game>
 
 </ion-content>

@@ -15,11 +15,37 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class OutingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  outing = {
+    id: 12,
+    course: {
+      url: "five-free-things",
+      name: "Five Free Things",
+      startPin: {
+        id: 1234,
+        lat: 33.7876935,
+        lon: -84.3727149,
+        lng: -84.3727149
+      }
+    },
+    date: "Saturday, March 3, 2018",
+    time: "10AM - 1PM",
+    team: {
+      id: 6,
+      name: "Soul Purpose"
+    },
+  };
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad OutingPage');
+  public addToCalendar() {
+    window.console.log("TODO: Download .ics file")
   }
 
+  public showTeam() {
+    this.navCtrl.push("TeamPage");
+  }
 }

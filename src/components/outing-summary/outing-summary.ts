@@ -14,6 +14,7 @@ import {NavController} from "ionic-angular";
 export class OutingSummaryComponent {
 
   outing = {
+    id: 12,
     course: {
       url: "five-free-things",
       name: "Five Free Things"
