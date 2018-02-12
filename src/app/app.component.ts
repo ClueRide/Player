@@ -6,7 +6,6 @@ import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
 
 import {HomePage} from "../pages/home/home";
-import {ProfileService} from "../../../front-end-common/src/providers/profile/profile.service";
 import {OutingPage} from "../pages/outing/outing";
 import {TeamPage} from "../pages/team/team";
 import {BadgesPage} from "../pages/badges/badges";
@@ -26,7 +25,6 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public authService: AuthService,
-    public profileService: ProfileService,
   ) {
     this.initializeApp();
 
@@ -45,7 +43,6 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
 
       /* Handles the return to the app after logging in at external site. */
       (<any>window).handleOpenURL = (url) => {
@@ -62,14 +59,28 @@ export class MyApp {
 
   ngOnInit() {
     console.log("App is initialized");
-    /* This is dependent on the loadToken having been run (promise resolved) as the initialization of the app. */
-    this.nav.setRoot(HomePage);
-    if (this.authService.isAuthenticated()) {
-      console.log("1. App is Registered under " + this.profileService.getPrincipal());
-    } else {
-      console.log("1. App is Unregistered");
-      this.nav.push(RegistrationPage);
-    }
+    this.checkDeviceRegistered();
+  }
+
+  /** Bring up Registration page if not yet registered; otherwise, wait for fresh token. */
+  private checkDeviceRegistered() {
+    this.authService.checkRegistrationRequired().then(
+      (needsRegistration) => {
+        let pageReadyPromise: Promise<void>;
+
+        pageReadyPromise = this.nav.setRoot(HomePage);
+        if (needsRegistration) {
+          pageReadyPromise = this.nav.push(RegistrationPage);
+        }
+
+        pageReadyPromise.then(
+          () => {
+            this.splashScreen.hide();
+          }
+        );
+      }
+
+    );
   }
 
 }
