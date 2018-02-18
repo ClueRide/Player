@@ -34,6 +34,7 @@
         "auth0-js": "^9.0.2",
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
+        "cordova-ios": "^4.4.0",
         "cordova-plugin-customurlscheme": "^4.3.0",
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-ionic-webview": "^1.1.16",
@@ -65,15 +66,16 @@
             "ionic-plugin-keyboard": {},
             "cordova-plugin-safariviewcontroller": {},
             "cordova-plugin-customurlscheme": {
-                "URL_SCHEME": "com.clueride",
-                "ANDROID_SCHEME": "com.clueride",
+                "URL_SCHEME": "com.clueride.player",
+                "ANDROID_SCHEME": "com.clueride.player",
                 "ANDROID_HOST": "clueride.auth0.com",
                 "ANDROID_PATHPREFIX": "/cordova/com.clueride/callback"
             }
         },
         "platforms": [
             "android",
-            "browser"
+            "browser",
+            "ios"
         ]
     }
 }
