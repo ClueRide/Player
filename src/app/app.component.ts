@@ -9,6 +9,7 @@ import {HomePage} from "../pages/home/home";
 import {OutingPage} from "../pages/outing/outing";
 import {TeamPage} from "../pages/team/team";
 import {BadgesPage} from "../pages/badges/badges";
+import {RollingPage} from "../pages/rolling/rolling";
 
 @Component({
   templateUrl: 'app.html'
@@ -34,6 +35,7 @@ export class MyApp {
       { title: 'Outing', component: OutingPage },
       { title: 'Badges', component: BadgesPage },
       { title: 'Team', component: TeamPage },
+      { title: 'Play Game', component: RollingPage },
     ];
 
   }

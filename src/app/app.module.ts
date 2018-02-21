@@ -15,6 +15,8 @@ import {SummaryComponentsModule} from "../components/components.module";
 import {OutingPageModule} from "../pages/outing/outing.module";
 import {BadgesPageModule} from "../pages/badges/badges.module";
 import {TeamPageModule} from "../pages/team/team.module";
+import {RollingPage} from "../pages/rolling/rolling";
+import {RollingPageModule} from "../pages/rolling/rolling.module";
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import {TeamPageModule} from "../pages/team/team.module";
     BrowserModule,
     IonicModule.forRoot(MyApp),
     ComponentsModule.forRoot(),
+    RollingPageModule,
     OutingPageModule,
     SummaryComponentsModule,
     TeamPageModule
@@ -33,10 +36,11 @@ import {TeamPageModule} from "../pages/team/team.module";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    TeamPage,
-    OutingPage,
     BadgesPage,
+    HomePage,
+    OutingPage,
+    RollingPage,
+    TeamPage,
   ],
   providers: [
     StatusBar,
