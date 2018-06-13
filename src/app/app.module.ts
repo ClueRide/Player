@@ -17,6 +17,7 @@ import {BadgesPageModule} from "../pages/badges/badges.module";
 import {TeamPageModule} from "../pages/team/team.module";
 import {RollingPage} from "../pages/rolling/rolling";
 import {RollingPageModule} from "../pages/rolling/rolling.module";
+import { ServerEventsProvider } from '../providers/server-events/server-events';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {RollingPageModule} from "../pages/rolling/rolling.module";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ServerEventsProvider
   ]
 })
 export class AppModule {}
