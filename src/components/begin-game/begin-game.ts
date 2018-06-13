@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {NavController} from "ionic-angular";
 
 /**
  * Generated class for the BeginGameComponent component.
@@ -12,12 +13,14 @@ import { Component } from '@angular/core';
 })
 export class BeginGameComponent {
 
-  constructor() {
+  constructor(
+    public navCtrl: NavController
+  ) {
   }
 
   public beginGame() {
     console.log('Beginning Game');
-    alert("Beginning Game");
+    this.navCtrl.push("RollingPage");
   }
 
 }

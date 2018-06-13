@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {ServerEventsProvider} from "../../providers/server-events/server-events";
 
 /**
  * Generated class for the RollingPage page.
@@ -15,11 +16,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RollingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private serverEvents: ServerEventsProvider,
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RollingPage');
+    this.serverEvents.initializeSubscriptions(3);
   }
 
 }
