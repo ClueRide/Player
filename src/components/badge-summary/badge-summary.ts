@@ -15,6 +15,7 @@ import {NavController} from "ionic-angular";
 export class BadgeSummaryComponent {
   badges: Array<Badge>;
   badgeService: BadgeService;
+  private isGuideFlag: boolean = false;
 
   constructor(
     badgeService: BadgeService,
@@ -27,12 +28,23 @@ export class BadgeSummaryComponent {
     this.badgeService.getList().subscribe(
       (response) => {
         this.badges = response;
+        this.badges.forEach(
+          badge => {
+            if (badge.name === "TEAM_LEAD") {
+              this.isGuideFlag = true;
+            }
+          }
+        );
       }
     );
   }
 
   public viewDetails() {
     this.navCtrl.push("BadgesPage");
+  }
+
+  public isGuide() {
+    return this.isGuideFlag;
   }
 
 }
