@@ -4,6 +4,7 @@ import {BadgeSummaryComponent} from "./badge-summary/badge-summary";
 import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
 import {BeginGameComponent} from "./begin-game/begin-game";
 import { PinnedMapComponent } from './pinned-map/pinned-map';
+import {CommonModule} from "@angular/common";
 
 @NgModule({
 	declarations: [
@@ -13,7 +14,9 @@ import { PinnedMapComponent } from './pinned-map/pinned-map';
     BeginGameComponent,
     PinnedMapComponent
   ],
-	imports: [],
+	imports: [
+	  CommonModule
+  ],
 	exports: [
     OutingSummaryComponent,
     BadgeSummaryComponent,
