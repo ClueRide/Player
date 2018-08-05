@@ -1,13 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ComponentsModule } from 'front-end-common';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {BrowserModule} from "@angular/platform-browser";
+import {ComponentsModule} from "front-end-common";
+import {ErrorHandler, NgModule} from "@angular/core";
+import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import {MyApp} from "./app.component";
+import {HomePage} from "../pages/home/home";
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {StatusBar} from "@ionic-native/status-bar";
+import {SplashScreen} from "@ionic-native/splash-screen";
 import {TeamPage} from "../pages/team/team";
 import {OutingPage} from "../pages/outing/outing";
 import {BadgesPage} from "../pages/badges/badges";
@@ -17,7 +17,7 @@ import {BadgesPageModule} from "../pages/badges/badges.module";
 import {TeamPageModule} from "../pages/team/team.module";
 import {RollingPage} from "../pages/rolling/rolling";
 import {RollingPageModule} from "../pages/rolling/rolling.module";
-import { ServerEventsProvider } from '../providers/server-events/server-events';
+import {ServerEventsProvider} from "../providers/server-events/server-events";
 
 @NgModule({
   declarations: [

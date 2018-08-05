@@ -27,5 +27,4 @@ export class RollingPage {
     console.log('ionViewDidLoad RollingPage');
     this.serverEvents.initializeSubscriptions(3);
   }
-
 }
