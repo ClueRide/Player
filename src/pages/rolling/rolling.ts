@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from "@angular/core";
+import {IonicPage, NavController, NavParams} from "ionic-angular";
 import {ServerEventsProvider} from "../../providers/server-events/server-events";
+import {Outing} from "../../providers/resources/outing/outing";
+import {OutingService} from "../../providers/resources/outing/outing.service";
+import {outingServiceProvider} from "../../providers/resources/outing/outing.service.provider";
 
 /**
  * Generated class for the RollingPage page.
@@ -13,18 +16,35 @@ import {ServerEventsProvider} from "../../providers/server-events/server-events"
 @Component({
   selector: 'page-rolling',
   templateUrl: 'rolling.html',
+  providers: [
+    OutingService,
+    outingServiceProvider
+  ],
 })
 export class RollingPage {
+  outing: Outing;
 
   constructor(
     private serverEvents: ServerEventsProvider,
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public outingService: OutingService
   ) {
   }
 
   ionViewDidLoad() {
+    const outingId = 3;
     console.log('ionViewDidLoad RollingPage');
-    this.serverEvents.initializeSubscriptions(3);
+
+    this.serverEvents.initializeSubscriptions(outingId);
+    this.outingService.get(
+      outingId
+    ).subscribe(
+      (outing) => {
+        this.outing = outing;
+      }
+    );
+
   }
+
 }

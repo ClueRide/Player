@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from "@angular/core";
+import {Outing} from "../../providers/resources/outing/outing";
 
 @Component({
   selector: 'rolling-map',
@@ -6,12 +7,18 @@ import { Component } from '@angular/core';
 })
 export class RollingMapComponent {
 
+  @Input() memberId: Number;
+  @Input() outing: Outing;
+
   constructor() {
     console.log('Hello RollingMapComponent Component');
   }
 
   public isGuide(): boolean {
-    return true;
+    return this.memberId
+      && this.outing
+      && this.outing.guideMemberId
+      && this.outing.guideMemberId === this.memberId;
   }
 
 }
