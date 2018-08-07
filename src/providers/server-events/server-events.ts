@@ -42,13 +42,14 @@ export class ServerEventsProvider {
         (openEvent) => {
           console.log("SSE Open: " + openEvent)
         }
-      )
+      );
 
       this.eventSource.onerror = (
         (error) => {
           console.log("SSE Error: " + error)
         }
-      )
+      );
+
     }
   }
 
