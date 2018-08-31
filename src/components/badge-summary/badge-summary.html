@@ -1,6 +1,9 @@
 <!-- Generated template for the BadgeSummaryComponent component -->
 <div>
-  <div class="section-heading">Badges</div>
+  <a (click)="viewDetails()">
+    <div class="section-heading">Badges</div>
+  </a>
+
   <div id="guide-capability">
     <ng-template [ngIf]="isGuide()" [ngIfElse]="notGuide">
       <div>
@@ -13,11 +16,16 @@
       </div>
     </ng-template>
   </div>
+
   <div class="badge-summary">
-    <a (click)="viewDetails()">
-      <li *ngFor="let badge of badges">
-        {{badge.name}}
-      </li>
-    </a>
+    <li *ngFor="let badge of badges">
+      <a [href]='badge.badgeCriteriaUrl'>
+        <img [src]='badge.badgeImageUrl' class="badge-image-summary">
+      </a>
+    </li>
   </div>
+
+  <!-- This is required to keep the next block items from glomming onto the end of this guy -->
+  <div style="clear:both"></div>
+
 </div>
