@@ -30,7 +30,8 @@ export class BadgeSummaryComponent {
         this.badges = response;
         this.badges.forEach(
           badge => {
-            if (badge.name === "TEAM_LEAD") {
+            /* TODO: Also need to match up the courses trained for. */
+            if (badge.badgeType === "GUIDE") {
               this.isGuideFlag = true;
             }
           }
