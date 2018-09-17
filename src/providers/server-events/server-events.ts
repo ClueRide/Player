@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {EventSourcePolyfill} from "ng-event-source";
 import {TokenService} from "../../../../front-end-common/index";
+import {GameStateProvider} from "../game-state/game-state";
 
 const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
 
@@ -13,7 +14,8 @@ export class ServerEventsProvider {
   private eventSource: EventSourcePolyfill;
 
   constructor(
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private gameStateService: GameStateProvider
   ) {
   }
 
@@ -35,6 +37,7 @@ export class ServerEventsProvider {
       this.eventSource.onmessage = (
         (messageEvent) => {
           console.log("SSE Message: " + messageEvent.data)
+          this.gameStateService.updateFromEvent(messageEvent.data);
         }
       );
 

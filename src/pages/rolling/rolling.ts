@@ -33,10 +33,13 @@ export class RollingPage {
   }
 
   ionViewDidLoad() {
-    const outingId = 3;
     console.log('ionViewDidLoad RollingPage');
 
+    // TODO: CA-376 how to establish Outing?
+    const outingId = 3;
+
     this.serverEvents.initializeSubscriptions(outingId);
+
     this.outingService.get(
       outingId
     ).subscribe(
