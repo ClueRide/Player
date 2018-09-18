@@ -3,7 +3,7 @@ import {IonicPage, NavController, NavParams} from "ionic-angular";
 import {ServerEventsProvider} from "../../providers/server-events/server-events";
 import {Outing} from "../../providers/resources/outing/outing";
 import {OutingService} from "../../providers/resources/outing/outing.service";
-import {outingServiceProvider} from "../../providers/resources/outing/outing.service.provider";
+import {OutingServiceProvider} from "../../providers/resources/outing/outing.service.provider";
 
 /**
  * Generated class for the RollingPage page.
@@ -18,7 +18,7 @@ import {outingServiceProvider} from "../../providers/resources/outing/outing.ser
   templateUrl: 'rolling.html',
   providers: [
     OutingService,
-    outingServiceProvider
+    OutingServiceProvider
   ],
 })
 export class RollingPage {

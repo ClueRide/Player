@@ -30,7 +30,7 @@ export class BadgeSummaryComponent {
         this.badges = response;
         this.badges.forEach(
           badge => {
-            /* TODO: Also need to match up the courses trained for. */
+            /* TODO: PLAY-31 Also need to match up the courses trained for. */
             if (badge.badgeType === "GUIDE") {
               this.isGuideFlag = true;
             }

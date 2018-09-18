@@ -4,8 +4,6 @@ import {Restangular} from "ngx-restangular";
 
 export const OUTING_REST = new InjectionToken<string>('OutingResource');
 
-/* Resource providing Nearest Location instances suitable for edit. */
-/* For a given locationId, provide a feature set (geometry) for the location. */
 const GET =
   {
     resourceName: 'outing/3',
@@ -28,7 +26,7 @@ export function RestFactory(
   return restangular.service('outing');
 }
 
-export let outingServiceProvider =
+export let OutingServiceProvider =
   { provide: OUTING_REST,
     useFactory: RestFactory,
     deps: [Restangular, Resource]
