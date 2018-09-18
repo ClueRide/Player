@@ -17,5 +17,11 @@
 
 
 <ion-content padding>
-
+  <div *ngIf="isGuide()">
+    <ion-fab left bottom>
+      <button ion-fab mini (tap)="signalTeamAssembled()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
+  </div>
 </ion-content>

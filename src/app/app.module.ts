@@ -18,7 +18,7 @@ import {TeamPageModule} from "../pages/team/team.module";
 import {RollingPage} from "../pages/rolling/rolling";
 import {RollingPageModule} from "../pages/rolling/rolling.module";
 import {ServerEventsProvider} from "../providers/server-events/server-events";
-import { GameStateProvider } from '../providers/game-state/game-state';
+import {GameStateProvider} from "../providers/game-state/game-state";
 
 @NgModule({
   declarations: [
