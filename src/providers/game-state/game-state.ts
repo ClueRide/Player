@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {App} from "ionic-angular";
+import {App, NavController} from "ionic-angular";
 
 /*
   Generated class for the GameStateProvider provider.
@@ -23,17 +23,13 @@ export class GameStateProvider {
       case "Team Assembled":
       case "Arrival":
         /* Case where we send out a Puzzle to be solved. */
-        this.app.getRootNav().push("PuzzlePage");   // TODO: getRootNav is deprecated
+        (<NavController>this.app.getRootNavById('n4')).push("PuzzlePage");
         break;
 
       case "Departure":
         /* Case where we update the map to show the next path and we begin riding again. */
-        this.app.getRootNav().pop()
-          .then(
-            (value => {
-              this.app.getRootNav().push("RollingPage");
-            })
-          );
+        (<NavController>this.app.getRootNavById('n4')).popToRoot();
+        // Do I need to respond to the promise?
         break;
 
       default:

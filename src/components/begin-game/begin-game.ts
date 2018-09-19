@@ -20,7 +20,7 @@ export class BeginGameComponent {
 
   public beginGame() {
     console.log('Beginning Game');
-    this.navCtrl.push("RollingPage");
+    this.navCtrl.setRoot("RollingPage");
   }
 
 }
