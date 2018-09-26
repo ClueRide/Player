@@ -2,10 +2,13 @@ import Auth0Cordova from "@auth0/cordova";
 import {AuthService, RegistrationPage} from "front-end-common";
 import {Component, ViewChild} from "@angular/core";
 import {Nav, Platform} from "ionic-angular";
-import {StatusBar} from "@ionic-native/status-bar";
+import {Observable} from "rxjs/Observable";
 import {SplashScreen} from "@ionic-native/splash-screen";
+import {StatusBar} from "@ionic-native/status-bar";
+import {Subject} from "rxjs/Subject";
 
 import {HomePage} from "../pages/home/home";
+import {InvitePage} from "../pages/invite/invite";
 import {OutingPage} from "../pages/outing/outing";
 import {TeamPage} from "../pages/team/team";
 import {BadgesPage} from "../pages/badges/badges";
@@ -63,11 +66,22 @@ export class MyApp {
   ngOnInit() {
     console.log("App is initialized");
     this.authService.setUrlScheme("com.clueride.player");
-    this.checkDeviceRegistered();
+    this.checkDeviceRegistered().subscribe(
+      (result) => {
+        /* We're registered. */
+        console.log("Successfully registered.");
+      },
+      () => {
+        /* Problem. */
+        console.log("Problem registering the application.");
+      }
+    );
   }
 
   /** Bring up Registration page if not yet registered; otherwise, wait for fresh token. */
-  private checkDeviceRegistered() {
+  private checkDeviceRegistered(): Observable<number> {
+    let registeredStateSubject: Subject<number> = new Subject;
+
     this.authService.checkRegistrationRequired().then(
       (needsRegistration) => {
         let pageReadyPromise: Promise<void>;
@@ -75,16 +89,20 @@ export class MyApp {
         pageReadyPromise = this.nav.setRoot(HomePage);
         if (needsRegistration) {
           pageReadyPromise = this.nav.push(RegistrationPage);
+        } else {
+          pageReadyPromise = this.nav.push(InvitePage);
         }
 
         pageReadyPromise.then(
           () => {
             this.splashScreen.hide();
+            registeredStateSubject.next(1);
           }
         );
       }
-
     );
+
+    return registeredStateSubject.asObservable();
   }
 
 }
