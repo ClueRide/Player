@@ -4,21 +4,23 @@ import {ErrorHandler, NgModule} from "@angular/core";
 import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 
 import {MyApp} from "./app.component";
-import {HomePage} from "../pages/home/home";
-
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
-import {TeamPage} from "../pages/team/team";
-import {OutingPage} from "../pages/outing/outing";
+
 import {BadgesPage} from "../pages/badges/badges";
-import {SummaryComponentsModule} from "../components/components.module";
-import {OutingPageModule} from "../pages/outing/outing.module";
 import {BadgesPageModule} from "../pages/badges/badges.module";
-import {TeamPageModule} from "../pages/team/team.module";
+import {GameStateProvider} from "../providers/game-state/game-state";
+import {HomePage} from "../pages/home/home";
+import {InvitePage} from "../pages/invite/invite";
+import {InvitePageModule} from "../pages/invite/invite.module";
+import {OutingPage} from "../pages/outing/outing";
+import {OutingPageModule} from "../pages/outing/outing.module";
 import {RollingPage} from "../pages/rolling/rolling";
 import {RollingPageModule} from "../pages/rolling/rolling.module";
 import {ServerEventsProvider} from "../providers/server-events/server-events";
-import {GameStateProvider} from "../providers/game-state/game-state";
+import {SummaryComponentsModule} from "../components/components.module";
+import {TeamPage} from "../pages/team/team";
+import {TeamPageModule} from "../pages/team/team.module";
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import {GameStateProvider} from "../providers/game-state/game-state";
     BrowserModule,
     IonicModule.forRoot(MyApp),
     ComponentsModule.forRoot(),
+    InvitePageModule,
     RollingPageModule,
     OutingPageModule,
     SummaryComponentsModule,
@@ -40,6 +43,7 @@ import {GameStateProvider} from "../providers/game-state/game-state";
     MyApp,
     BadgesPage,
     HomePage,
+    InvitePage,
     OutingPage,
     RollingPage,
     TeamPage,
@@ -52,4 +56,5 @@ import {GameStateProvider} from "../providers/game-state/game-state";
     GameStateProvider
   ]
 })
+
 export class AppModule {}
