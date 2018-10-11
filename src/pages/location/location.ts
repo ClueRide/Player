@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Title} from "@angular/platform-browser";
 
 /**
  * Generated class for the LocationPage page.
@@ -15,11 +16,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LocationPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public titleService: Title,
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LocationPage');
+  }
+
+  ionViewDidEnter() {
+    this.titleService.setTitle("Location");
   }
 
 }

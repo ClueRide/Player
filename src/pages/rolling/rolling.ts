@@ -4,6 +4,7 @@ import {ServerEventsProvider} from "../../providers/server-events/server-events"
 import {Outing} from "../../providers/resources/outing/outing";
 import {OutingService} from "../../providers/resources/outing/outing.service";
 import {OutingServiceProvider} from "../../providers/resources/outing/outing.service.provider";
+import {Title} from "@angular/platform-browser";
 
 /**
  * Generated class for the RollingPage page.
@@ -28,7 +29,8 @@ export class RollingPage {
     private serverEvents: ServerEventsProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public outingService: OutingService
+    public outingService: OutingService,
+    public titleService: Title,
   ) {
   }
 
@@ -48,6 +50,10 @@ export class RollingPage {
       }
     );
 
+  }
+
+  ionViewDidEnter() {
+    this.titleService.setTitle("Rolling");
   }
 
 }
