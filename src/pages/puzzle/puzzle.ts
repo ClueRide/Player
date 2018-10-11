@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
+import {Title} from "@angular/platform-browser";
 
 /**
  * Generated class for the PuzzlePage page.
@@ -24,13 +25,18 @@ export class PuzzlePage {
   constructor(
     private guideEventService: GuideEventService,
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public titleService: Title,
   ) {
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PuzzlePage');
+  }
+
+  ionViewDidEnter() {
+    this.titleService.setTitle("Puzzle");
   }
 
   // TODO: PLAY-31 Make this a proper assessment of the Guide's ability

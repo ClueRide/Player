@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Outing} from "../../providers/resources/outing/outing";
+import {Title} from "@angular/platform-browser";
 
 /**
  * Generated class for the OutingPage page.
@@ -43,8 +44,13 @@ export class OutingPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public titleService: Title,
   ) {
+  }
+
+  ionViewDidEnter() {
+    this.titleService.setTitle("Outing");
   }
 
   public addToCalendar() {

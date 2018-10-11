@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'page-list',
@@ -10,7 +11,11 @@ export class ListPage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public titleService: Title,
+  ) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
@@ -26,6 +31,10 @@ export class ListPage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
+  }
+
+  ionViewDidEnter() {
+    this.titleService.setTitle("List");
   }
 
   itemTapped(event, item) {
