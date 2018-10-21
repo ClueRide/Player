@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Invite, InviteService} from "front-end-common";
 
 /**
  * Generated class for the InviteListComponent component.
@@ -13,10 +14,23 @@ import { Component } from '@angular/core';
 export class InviteListComponent {
 
   text: string;
+  inviteService: InviteService;
+  invites: Array<Invite>;
 
-  constructor() {
+  constructor(
+    inviteService: InviteService,
+  ) {
     console.log('Hello InviteListComponent Component');
     this.text = 'Hello World';
+    this.inviteService = inviteService;
+  }
+
+  ngOnInit() {
+    this.inviteService.myInvites().subscribe(
+      (response) => {
+        this.invites = response;
+      }
+    );
   }
 
 }
