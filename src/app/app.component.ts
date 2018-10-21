@@ -39,6 +39,8 @@ export class MyApp {
       { title: 'Badges', component: BadgesPage },
       { title: 'Team', component: TeamPage },
       { title: 'Play Game', component: RollingPage },
+      /* Temporary for ease of exercising the InviteService calls. */
+      { title: 'Invite Page', component: InvitePage },
     ];
 
   }

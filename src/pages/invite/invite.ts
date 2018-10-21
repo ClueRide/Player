@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Invite, InviteService} from "front-end-common";
 
 /**
  * Generated class for the InvitePage page.
@@ -15,11 +16,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class InvitePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  inviteService: InviteService;
+  invites: Array<Invite>;
+
+  constructor(
+    inviteService: InviteService,
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
+    this.inviteService = inviteService;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvitePage');
+    this.inviteService.myInvites().subscribe(
+      (response) => {
+        this.invites = response;
+      }
+    );
+  }
+
+  ngOnInit() {
   }
 
   public haveActiveInvite() {
