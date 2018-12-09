@@ -77,14 +77,13 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
     <allow-navigation href="http://10.0.0.6:8100" />
-    <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
         <variable name="URL_SCHEME" value="com.clueride.player" />
         <variable name="ANDROID_SCHEME" value="com.clueride.player" />
         <variable name="ANDROID_HOST" value="clueride.auth0.com" />
-        <variable name="ANDROID_PATHPREFIX" value="/cordova/com.clueride.player/callback" />
+        <variable name="ANDROID_PATHPREFIX" value="/cordova/com.clueride/callback" />
     </plugin>
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
@@ -92,4 +91,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <engine name="android" spec="~6.2.3" />
 </widget>
