@@ -7,6 +7,7 @@ import {MyApp} from "./app.component";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
 
+import {AppStateService} from '../providers/app-state/app-state.service';
 import {BadgesPage} from "../pages/badges/badges";
 import {BadgesPageModule} from "../pages/badges/badges.module";
 import {GameStateProvider} from "../providers/game-state/game-state";
@@ -49,11 +50,12 @@ import {TeamPageModule} from "../pages/team/team.module";
     TeamPage,
   ],
   providers: [
+    AppStateService,
+    GameStateProvider,
+    ServerEventsProvider,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ServerEventsProvider,
-    GameStateProvider
   ]
 })
 
