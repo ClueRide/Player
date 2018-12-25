@@ -1,5 +1,7 @@
+import {AppState} from "../providers/app-state/app-state";
+import {AppStateService} from "../providers/app-state/app-state.service";
 import Auth0Cordova from "@auth0/cordova";
-import {AuthService, RegistrationPage} from "front-end-common";
+import {AuthService} from "front-end-common";
 import {Component, ViewChild} from "@angular/core";
 import {Nav, Platform} from "ionic-angular";
 import {Observable} from "rxjs/Observable";
@@ -7,16 +9,16 @@ import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
 import {Subject} from "rxjs/Subject";
 
-import {HomePage} from "../pages/home/home";
-import {InvitePage} from "../pages/invite/invite";
-import {OutingPage} from "../pages/outing/outing";
-import {TeamPage} from "../pages/team/team";
 import {BadgesPage} from "../pages/badges/badges";
+import {HomePage} from "../pages/home/home";
+import {OutingPage} from "../pages/outing/outing";
 import {RollingPage} from "../pages/rolling/rolling";
+import {TeamPage} from "../pages/team/team";
 
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
@@ -29,6 +31,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public authService: AuthService,
+    public appStateService: AppStateService,
   ) {
     this.initializeApp();
 
@@ -39,8 +42,6 @@ export class MyApp {
       { title: 'Badges', component: BadgesPage },
       { title: 'Team', component: TeamPage },
       { title: 'Play Game', component: RollingPage },
-      /* Temporary for ease of exercising the InviteService calls. */
-      { title: 'Invite Page', component: InvitePage },
     ];
 
   }
@@ -67,11 +68,12 @@ export class MyApp {
 
   ngOnInit() {
     console.log("App is initialized");
+    /* URL Scheme determines the URL where we respond to callbacks from Identity Provider. */
     this.authService.setUrlScheme("com.clueride.player");
+
     this.checkDeviceRegistered().subscribe(
       (result) => {
-        /* We're registered. */
-        console.log("Successfully registered.");
+        /* Nothing to be done; we're now on the correct initial page. */
       },
       () => {
         /* Problem. */
@@ -88,11 +90,10 @@ export class MyApp {
       (needsRegistration) => {
         let pageReadyPromise: Promise<void>;
 
-        pageReadyPromise = this.nav.setRoot(HomePage);
         if (needsRegistration) {
-          pageReadyPromise = this.nav.push(RegistrationPage);
+          pageReadyPromise = this.appStateService.prepareAndShowPage(AppState.UNREGISTERED);
         } else {
-          pageReadyPromise = this.nav.push(InvitePage);
+          pageReadyPromise = this.appStateService.checkInviteIsAccepted();
         }
 
         pageReadyPromise.then(
