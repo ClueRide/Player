@@ -57,19 +57,23 @@ export class AppStateService implements ConfirmationListener {
 
     switch(appState) {
       case AppState.UNREGISTERED:
+        console.log("Headed to the Registration Page");
         pageReadyPromise = this.nav.setRoot(RegistrationPage);
         break;
 
       case AppState.READY_TO_PLAY:
+        console.log("Headed to the Home Page");
         pageReadyPromise = this.nav.setRoot(HomePage);
         break;
 
       case AppState.INVITED:
+        console.log("Headed to the Invite Page");
         pageReadyPromise = this.nav.setRoot(InvitePage);
         break;
 
       case AppState.NO_INVITES:
         // TODO: Temporary until we create the new page
+        console.log("Headed to the Home Page - No Invites");
         pageReadyPromise = this.nav.setRoot(HomePage);
         break;
 
@@ -104,7 +108,9 @@ export class AppStateService implements ConfirmationListener {
             pagePromise = this.prepareAndShowPage(AppState.INVITED);
             break;
           case SessionInviteState.NO_INVITES:
-            // TODO: What to do here?
+          case SessionInviteState.MULTIPLE_INVITES:
+          default:
+            pagePromise = this.prepareAndShowPage(AppState.INVITED);
                 break;
         }
       }
