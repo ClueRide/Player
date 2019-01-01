@@ -50,7 +50,10 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+      if (!this.authService.runningLocal()) {
+        /* Since this is a cordova native statusbar, only set style if not within a browser (local). */
+        this.statusBar.styleDefault();
+      }
 
       /* Handles the return to the app after logging in at external site. */
       (<any>window).handleOpenURL = (url) => {
@@ -98,7 +101,10 @@ export class MyApp {
 
         pageReadyPromise.then(
           () => {
-            this.splashScreen.hide();
+            if (!this.authService.runningLocal()) {
+              /* Splash screen is native only. */
+              this.splashScreen.hide();
+            }
             registeredStateSubject.next(1);
           }
         );

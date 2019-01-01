@@ -1,4 +1,8 @@
 <!-- Generated template for the InviteListComponent component -->
 <div>
-  {{text}}
+  <ul>
+    <li *ngFor="let invite of invites">
+      Invite ID: {{invite.id}} Member ID: {{invite.memberId}}
+    </li>
+  </ul>
 </div>
