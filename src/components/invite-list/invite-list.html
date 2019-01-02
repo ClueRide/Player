@@ -2,7 +2,15 @@
 <div>
   <ul>
     <li *ngFor="let invite of invites">
-      Invite ID: {{invite.id}} Member ID: {{invite.memberId}}
+      You're invited by {{invite.guideName}} to join team {{invite.teamName}} to play Clue Ride.
+      <a [href]='invite.courseUrl'>{{invite.courseName}}</a>
+        on {{invite.scheduledTime | date:'medium'}}
+      <button ion-button (click) = "acceptInvite(invite.id)">
+        <span class="button-inner">Accept</span>
+      </button>
+      <button ion-button (click) = "declineInvite(invite.id)">
+        <span class="button-inner">Decline</span>
+      </button>
     </li>
   </ul>
 </div>

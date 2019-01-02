@@ -13,7 +13,6 @@ import {Invite, InviteService} from "front-end-common";
 })
 export class InviteListComponent {
 
-  text: string;
   inviteService: InviteService;
   invites: Array<Invite>;
 
@@ -21,7 +20,6 @@ export class InviteListComponent {
     inviteService: InviteService,
   ) {
     console.log('Hello InviteListComponent Component');
-    this.text = 'Hello World';
     this.inviteService = inviteService;
   }
 
@@ -29,6 +27,22 @@ export class InviteListComponent {
     this.inviteService.myInvites().subscribe(
       (response) => {
         this.invites = response;
+      }
+    );
+  }
+
+  public acceptInvite(inviteId) {
+    this.inviteService.accept(inviteId).subscribe(
+      () => {
+        // location.reload();
+      }
+    );
+  }
+
+  public declineInvite(inviteId) {
+    this.inviteService.decline(inviteId).subscribe(
+      () => {
+        // location.reload();
       }
     );
   }
