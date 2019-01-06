@@ -1,16 +1,16 @@
 import {Component} from "@angular/core";
 import {IonicPage, NavController, NavParams} from "ionic-angular";
+import {OutingService} from "../../../../front-end-common/index";
+import {OutingView} from "../../../../front-end-common/index";
 import {ServerEventsProvider} from "../../providers/server-events/server-events";
-import {Outing} from "../../providers/resources/outing/outing";
-import {OutingService} from "../../providers/resources/outing/outing.service";
-import {OutingServiceProvider} from "../../providers/resources/outing/outing.service.provider";
 import {Title} from "@angular/platform-browser";
 
 /**
- * Generated class for the RollingPage page.
+ * Presents the map for the game while "Rolling".
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * This serves as the "root" of a game tree of pages, whose state changes are driven
+ * by the subscription to the Game State (via the ServerEventsProvider).
+ *
  */
 
 @IonicPage()
@@ -19,11 +19,10 @@ import {Title} from "@angular/platform-browser";
   templateUrl: 'rolling.html',
   providers: [
     OutingService,
-    OutingServiceProvider
   ],
 })
 export class RollingPage {
-  outing: Outing;
+  outing: OutingView;
 
   constructor(
     private serverEvents: ServerEventsProvider,
@@ -38,7 +37,7 @@ export class RollingPage {
     console.log('ionViewDidLoad RollingPage');
 
     // TODO: CA-376 how to establish Outing?
-    const outingId = 3;
+    const outingId = 1;
 
     this.serverEvents.initializeSubscriptions(outingId);
 

@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
-import {Outing} from "../../providers/resources/outing/outing";
 import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
+import {OutingView} from "../../../../front-end-common/index";
 
 @Component({
   selector: 'rolling-map',
@@ -14,7 +14,7 @@ import {GuideEventService} from "../../providers/resources/guide-events/guide-ev
 export class RollingMapComponent {
 
   @Input() memberId: Number;
-  @Input() outing: Outing;
+  @Input() outing: OutingView;
 
   constructor(
     private guideEventService: GuideEventService
