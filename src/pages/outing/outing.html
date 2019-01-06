@@ -17,17 +17,16 @@
 
 
 <ion-content padding>
-  <div class="section-heading">
-    Outing
+  <div>
+    Course Name: <a [href]='outing.courseUrl'>{{outing.courseName}}</a>
   </div>
   <div>
-    Course Name: <a href="https://www.clueride.com/{{outing.course.url}}">{{outing.course.name}}</a>
-  </div>
-  <div>
-    Date: {{outing.date}}
-  </div>
-  <div>
-    Time: {{outing.time}}
+    <span>
+      Date: {{outing.scheduledTime | date}}
+    </span>
+    <span float-right>
+      Time: {{outing.scheduledTime | date:'shortTime'}}
+    </span>
   </div>
   <div class="section-button-right">
     <button ion-button (click)="addToCalendar()">Add to Calendar</button>
@@ -37,10 +36,10 @@
     Team
   </div>
   <div>
-    <a (click)="showTeam()">{{outing.team.name}}</a>
+    <a (click)="showTeam()">{{outing.teamName}}</a>
   </div>
 
-  <pinned-map class="map-content" [pin]=outing.course.startPin></pinned-map>
+  <pinned-map class="map-content" [pinObservable]='pinObservable'></pinned-map>
 
   <begin-game></begin-game>
 
