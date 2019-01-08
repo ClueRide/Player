@@ -39,7 +39,7 @@
     <a (click)="showTeam()">{{outing.teamName}}</a>
   </div>
 
-  <pinned-map class="map-content" [pinObservable]='pinObservable'></pinned-map>
+  <pinned-map class="map-content" [pin]='outing.startPin'></pinned-map>
 
   <begin-game></begin-game>
 

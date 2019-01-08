@@ -1,7 +1,7 @@
 import {App, NavController} from "ionic-angular";
 import {AppState} from "./app-state";
 import {Injectable} from "@angular/core";
-import {RegistrationPage, InviteService, SessionInviteState} from "../../../../front-end-common/index";
+import {RegistrationPage, InviteService, OutingService, SessionInviteState} from "../../../../front-end-common/index";
 import {HomePage} from "../../pages/home/home";
 import {InvitePage} from "../../pages/invite/invite";
 import {ProfileService, ConfirmationListener, ConfirmationState} from "../../../../front-end-common/src/providers/profile/profile.service";
@@ -24,6 +24,7 @@ export class AppStateService implements ConfirmationListener {
     public app: App,
     public inviteService: InviteService,
     public profileService: ProfileService,
+    private outingService: OutingService,
   ) {
     /** Add ourselves to the list of profile listeners. */
     profileService.listeners.push(this);
@@ -63,6 +64,10 @@ export class AppStateService implements ConfirmationListener {
 
       case AppState.READY_TO_PLAY:
         console.log("Headed to the Home Page");
+        this.outingService.getSessionOuting().subscribe(
+          /* Not used here; we're pre-populating the cache. */
+          () => {}
+        );
         pageReadyPromise = this.nav.setRoot(HomePage);
         break;
 
