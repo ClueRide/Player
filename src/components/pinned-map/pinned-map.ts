@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {LatLon} from "../lat-lon";
-import {Observable} from "rxjs/Observable";
 import * as L from "leaflet";
 
 /**
@@ -15,8 +14,7 @@ import * as L from "leaflet";
 })
 export class PinnedMapComponent {
 
-  @Input() pinObservable: Observable<LatLon>;
-  pin: LatLon = new LatLon();
+  @Input() pin: LatLon;
   map: any;
   zoomLevel = 14;
 
@@ -24,22 +22,6 @@ export class PinnedMapComponent {
   }
 
   ngOnInit(): void {
-    /* postpone showing the map until the position comes back from the server. */
-    this.pinObservable.subscribe(
-      (latLon) => {
-        this.pin.lat = latLon.lat;
-        this.pin.lon = latLon.lon;
-        this.pin.lng = latLon.lon;
-        this.pin.id = latLon.id;
-        this.showMap();
-      }
-    );
-  }
-
-  /**
-   * Build the map and open to the position defined by the 'pin'.
-   */
-  showMap(): void {
     this.map = L.map('pinned-map');
 
     let leafletPosition = [
@@ -56,7 +38,9 @@ export class PinnedMapComponent {
 
   /* Cleanup after ourselves. */
   ngOnDestroy(): void {
-    this.map.remove();
+    if (this.map) {
+      this.map.remove();
+    }
   }
 
 }

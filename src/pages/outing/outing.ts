@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {LatLon} from "../../components/lat-lon";
-import {Observable} from "rxjs/Observable";
-import {OutingService} from "../../../../front-end-common/index";
-import {OutingView} from "../../../../front-end-common/index";
-import {Subject} from "rxjs/Subject";
+import {OutingService} from "front-end-common";
+import {OutingView} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 
 /**
@@ -19,8 +16,6 @@ import {Title} from "@angular/platform-browser";
 export class OutingPage {
 
   outing: OutingView = new OutingView();
-  pinSubject: Subject<LatLon> = new Subject<LatLon>();
-  pinObservable: Observable<LatLon> = this.pinSubject.asObservable();
 
   constructor(
     public navCtrl: NavController,
@@ -28,17 +23,9 @@ export class OutingPage {
     public titleService: Title,
     public outingService: OutingService,
   ) {
-    /* TODO: FEC-8
-     * Consider that an outing only changes as the invitation is accepted and can be held within
-     * the Outing Service.
-     */
-    // TODO: CA-376 pickup Outing from session as part of accepting the Invite.
-    let outingId: number = 1;
-
-    outingService.get(outingId).subscribe(
+    outingService.getSessionOuting().subscribe(
+      /* Generally, the Outing has been cached. */
       (response) => {
-        console.log("Got Outing View; sending Pin to subject");
-        this.pinSubject.next(response.startPin);
         this.outing = response;
       }
     );
