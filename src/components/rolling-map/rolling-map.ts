@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
-import {EdgeService, OutingView} from "../../../../front-end-common/index";
+import {PathService, OutingView} from "../../../../front-end-common/index";
 
 import * as L from "leaflet";
 
@@ -23,7 +23,8 @@ export class RollingMapComponent {
 
   constructor(
     private guideEventService: GuideEventService,
-    private edgeService: EdgeService,
+    // private edgeService: EdgeService,
+    private pathService: PathService,
   ) {
     console.log('Hello RollingMapComponent Component');
   }
@@ -43,9 +44,9 @@ export class RollingMapComponent {
     this.edgeLayer = L.geoJSON().addTo(this.map);
 
     /* When changes come in, we throw them into the layer. */
-    this.edgeService.getEdgeGeoJson(238).subscribe(
-      (edge) => {
-        this.edgeLayer.addData(edge);
+    this.pathService.getPathGeoJson(13).subscribe(
+      (path) => {
+        this.edgeLayer.addData(path);
       }
     );
 
