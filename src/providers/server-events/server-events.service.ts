@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {EventSourcePolyfill} from "ng-event-source";
+import {GameStateService} from "../game-state/game-state.service";
 import {TokenService} from "../../../../front-end-common/index";
-import {GameStateProvider} from "../game-state/game-state";
 
 const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
 
@@ -9,13 +9,13 @@ const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
  * Handles subscription to Server-Sent events (SSE) such as Game State transitions.
 */
 @Injectable()
-export class ServerEventsProvider {
+export class ServerEventsService {
 
   private eventSource: EventSourcePolyfill;
 
   constructor(
     private tokenService: TokenService,
-    private gameStateService: GameStateProvider
+    private gameStateService: GameStateService
   ) {
   }
 
@@ -36,7 +36,7 @@ export class ServerEventsProvider {
 
       this.eventSource.onmessage = (
         (messageEvent) => {
-          console.log("SSE Message: " + messageEvent.data)
+          console.log("SSE Message: " + messageEvent.data);
           this.gameStateService.updateFromEvent(messageEvent.data);
         }
       );

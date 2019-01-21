@@ -2,14 +2,14 @@ import {Component} from "@angular/core";
 import {IonicPage, NavController, NavParams} from "ionic-angular";
 import {OutingService} from "../../../../front-end-common/index";
 import {OutingView} from "../../../../front-end-common/index";
-import {ServerEventsProvider} from "../../providers/server-events/server-events";
+import {ServerEventsService} from "../../providers/server-events/server-events.service";
 import {Title} from "@angular/platform-browser";
 
 /**
  * Presents the map for the game while "Rolling".
  *
  * This serves as the "root" of a game tree of pages, whose state changes are driven
- * by the subscription to the Game State (via the ServerEventsProvider).
+ * by the subscription to the Game State (via the ServerEventsService).
  *
  */
 
@@ -25,7 +25,7 @@ export class RollingPage {
   outing: OutingView;
 
   constructor(
-    private serverEvents: ServerEventsProvider,
+    private serverEvents: ServerEventsService,
     public navCtrl: NavController,
     public navParams: NavParams,
     public outingService: OutingService,

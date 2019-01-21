@@ -1,19 +1,16 @@
 import {Injectable} from "@angular/core";
 import {App, NavController} from "ionic-angular";
 
-/*
-  Generated class for the GameStateProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+/** Drives updating the Team Members synchronously between
+ * Sleuthing (upon Arrival) and Rolling (upon Departure).
+ */
 @Injectable()
-export class GameStateProvider {
+export class GameStateService {
 
   constructor(
-    public app: App   // TODO: Temporary solution just to see if pages can be changed based on events
+    public app: App
   ) {
-    console.log('Hello GameStateProvider Provider');
+    console.log('Hello GameStateService Provider');
   }
 
   updateFromEvent(eventJson: string) {

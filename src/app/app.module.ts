@@ -10,7 +10,7 @@ import {SplashScreen} from "@ionic-native/splash-screen";
 import {AppStateService} from '../providers/app-state/app-state.service';
 import {BadgesPage} from "../pages/badges/badges";
 import {BadgesPageModule} from "../pages/badges/badges.module";
-import {GameStateProvider} from "../providers/game-state/game-state";
+import {GameStateService} from "../providers/game-state/game-state.service";
 import {HomePage} from "../pages/home/home";
 import {InvitePage} from "../pages/invite/invite";
 import {InvitePageModule} from "../pages/invite/invite.module";
@@ -18,7 +18,7 @@ import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
 import {RollingPage} from "../pages/rolling/rolling";
 import {RollingPageModule} from "../pages/rolling/rolling.module";
-import {ServerEventsProvider} from "../providers/server-events/server-events";
+import {ServerEventsService} from "../providers/server-events/server-events.service";
 import {SummaryComponentsModule} from "../components/components.module";
 import {TeamPage} from "../pages/team/team";
 import {TeamPageModule} from "../pages/team/team.module";
@@ -51,8 +51,8 @@ import {TeamPageModule} from "../pages/team/team.module";
   ],
   providers: [
     AppStateService,
-    GameStateProvider,
-    ServerEventsProvider,
+    GameStateService,
+    ServerEventsService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
