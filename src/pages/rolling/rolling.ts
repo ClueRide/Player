@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {IonicPage, NavController, NavParams} from "ionic-angular";
-import {OutingService} from "../../../../front-end-common/index";
-import {OutingView} from "../../../../front-end-common/index";
-import {ServerEventsService} from "../../providers/server-events/server-events.service";
+import {GameState} from "../../providers/game-state/game-state";
+import {GameStateService} from "../../providers/game-state/game-state.service";
+import {IonicPage} from "ionic-angular";
+import {OutingService, OutingView} from "../../../../front-end-common/index";
 import {Title} from "@angular/platform-browser";
 
 /**
@@ -10,7 +10,6 @@ import {Title} from "@angular/platform-browser";
  *
  * This serves as the "root" of a game tree of pages, whose state changes are driven
  * by the subscription to the Game State (via the ServerEventsService).
- *
  */
 
 @IonicPage()
@@ -23,14 +22,14 @@ import {Title} from "@angular/platform-browser";
 })
 export class RollingPage {
   outing: OutingView;
+  gameState: GameState;
 
   constructor(
-    private serverEvents: ServerEventsService,
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private gameStateService: GameStateService,
     public outingService: OutingService,
     public titleService: Title,
   ) {
+    console.log("Hello RollingPage");
   }
 
   ionViewDidLoad() {
@@ -39,19 +38,23 @@ export class RollingPage {
     // TODO: CA-376 how to establish Outing?
     const outingId = 1;
 
-    this.serverEvents.initializeSubscriptions(outingId);
-
-    this.outingService.get(
-      outingId
-    ).subscribe(
+    this.outingService.getSessionOuting().subscribe(
       (outing) => {
         this.outing = outing;
+      }
+    );
+
+    this.gameStateService.getGameStateObservable().subscribe(
+      (gameState) => {
+        console.log("Rolling Page: Updating Game State");
+        this.gameState = Object.assign({}, gameState);
       }
     );
 
   }
 
   ionViewDidEnter() {
+    console.log("RollingPage.ionViewDidEnter");
     this.titleService.setTitle("Rolling");
   }
 
