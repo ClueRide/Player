@@ -36,6 +36,7 @@ export class PuzzlePage {
   }
 
   ionViewDidEnter() {
+    console.log("PuzzlePage.ionViewDidEnter");
     this.titleService.setTitle("Puzzle");
   }
 
