@@ -1,9 +1,10 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {GameState} from "../../providers/game-state/game-state";
 import {GameStateService} from "../../providers/game-state/game-state.service";
-import {IonicPage} from "ionic-angular";
+import {IonicPage, Navbar} from "ionic-angular";
 import {OutingService, OutingView} from "../../../../front-end-common/index";
 import {Title} from "@angular/platform-browser";
+import {NavService} from "../../providers/nav/nav.service";
 
 /**
  * Presents the map for the game while "Rolling".
@@ -23,20 +24,27 @@ import {Title} from "@angular/platform-browser";
 export class RollingPage {
   outing: OutingView;
   gameState: GameState;
+  @ViewChild(Navbar) navbar: Navbar;
 
   constructor(
     private gameStateService: GameStateService,
     public outingService: OutingService,
     public titleService: Title,
+    public navService: NavService,
   ) {
     console.log("Hello RollingPage");
   }
 
+  ionViewWillEnter() {
+    this.navbar.backButtonClick =
+      (e:UIEvent) => {
+      console.log("Responding to Back Button");
+        this.navService.goToPage("HomePage");
+      }
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad RollingPage');
-
-    // TODO: CA-376 how to establish Outing?
-    const outingId = 1;
 
     this.outingService.getSessionOuting().subscribe(
       (outing) => {

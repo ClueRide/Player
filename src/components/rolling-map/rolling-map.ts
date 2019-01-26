@@ -48,6 +48,10 @@ export class RollingMapComponent {
   }
 
   ngOnInit(): void {
+    if (this.map) {
+      return;
+    }
+
     this.map = L.map('rolling-map');
 
     /* Temporary just to get the map in the ball-park of the track I've pulled in. */

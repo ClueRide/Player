@@ -14,6 +14,7 @@ import {GameStateService} from "../providers/game-state/game-state.service";
 import {HomePage} from "../pages/home/home";
 import {InvitePage} from "../pages/invite/invite";
 import {InvitePageModule} from "../pages/invite/invite.module";
+import {NavService} from '../providers/nav/nav.service';
 import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
 import {RollingPage} from "../pages/rolling/rolling";
@@ -52,6 +53,7 @@ import {TeamPageModule} from "../pages/team/team.module";
   providers: [
     AppStateService,
     GameStateService,
+    NavService,
     ServerEventsService,
     StatusBar,
     SplashScreen,

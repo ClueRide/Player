@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {OutingService} from "front-end-common";
-import {OutingView} from "front-end-common";
+import {Component, ViewChild} from '@angular/core';
+import {IonicPage, Navbar} from 'ionic-angular';
+import {OutingService, OutingView} from "front-end-common";
 import {Title} from "@angular/platform-browser";
+import {NavService} from "../../providers/nav/nav.service";
 
 /**
  * Orients players having accepted an invite by presenting an overview of the Outing.
@@ -16,10 +16,10 @@ import {Title} from "@angular/platform-browser";
 export class OutingPage {
 
   outing: OutingView = new OutingView();
+  @ViewChild(Navbar) navbar: Navbar;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    public navService: NavService,
     public titleService: Title,
     public outingService: OutingService,
   ) {
@@ -31,6 +31,14 @@ export class OutingPage {
     );
   }
 
+  ionViewWillEnter() {
+    this.navbar.backButtonClick =
+      (e:UIEvent) => {
+      console.log("Responding to Back Button");
+        this.navService.goToPage("HomePage");
+      }
+  }
+
   ionViewDidEnter() {
     this.titleService.setTitle("Outing");
   }
@@ -40,7 +48,7 @@ export class OutingPage {
   }
 
   public showTeam() {
-    this.navCtrl.push("TeamPage");
+    this.navService.goToPage("TeamPage");
   }
 
 }

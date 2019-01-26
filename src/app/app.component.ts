@@ -14,6 +14,7 @@ import {HomePage} from "../pages/home/home";
 import {OutingPage} from "../pages/outing/outing";
 import {RollingPage} from "../pages/rolling/rolling";
 import {TeamPage} from "../pages/team/team";
+import {NavService} from "../providers/nav/nav.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -32,6 +33,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public authService: AuthService,
     public appStateService: AppStateService,
+    public navService: NavService,
   ) {
     this.initializeApp();
 
@@ -59,14 +61,22 @@ export class MyApp {
       (<any>window).handleOpenURL = (url) => {
         console.log("Redirecting custom scheme: " + url);
         Auth0Cordova.onRedirectUri(url);
-      }
+      };
+
+      /* Handles the hardware back button; not the one in the NavBar. */
+      this.platform.registerBackButtonAction(
+        () => {
+          console.log("Responding to Back Button");
+          this.navService.goToPage("HomePage");
+        }
+      );
+
     });
   }
 
+  /** This is used by the current Menu that is setup within the app.html template. */
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.navService.goToPage(page.component.name);
   }
 
   ngOnInit() {

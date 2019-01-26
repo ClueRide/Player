@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {App, NavController} from "ionic-angular";
 import {GameState} from "./game-state";
 import {Observable, Subject} from "rxjs";
+import {NavService} from "../nav/nav.service";
 
 /** Drives updating the Team Members synchronously between
  * Sleuthing (upon Arrival) and Rolling (upon Departure).
@@ -12,7 +13,8 @@ export class GameStateService {
   private gameStateObservable: Observable<GameState> = this.gameStateSubject.asObservable();
 
   constructor(
-    public app: App
+    public app: App,
+    private navService: NavService,
   ) {
     console.log('Hello GameStateService Provider');
   }
@@ -24,16 +26,13 @@ export class GameStateService {
       case "Team Assembled":
       case "Arrival":
         /* Case where we send out a Puzzle to be solved. */
-        (<NavController>this.app.getRootNavById('n4')).setRoot("PuzzlePage");
+        this.navService.goToPage("PuzzlePage");
         break;
 
       case "Departure":
         /* Case where we update the map to show the next path and we begin riding again. */
-        (
-          <NavController>this.app.getRootNavById('n4')
-        ).setRoot(
-          "RollingPage"
-        ).then(
+        this.navService.goToPage("RollingPage")
+        .subscribe (
           () => {
             console.log("After Page Navigation completes: GameState is " + JSON.stringify(event.gameState));
             this.gameStateSubject.next(event.gameState);

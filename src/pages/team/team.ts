@@ -1,8 +1,9 @@
-import {Component} from "@angular/core";
-import {IonicPage, NavController, NavParams} from "ionic-angular";
+import {Component, ViewChild} from "@angular/core";
+import {IonicPage, Navbar, NavController, NavParams} from "ionic-angular";
 import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
 import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {Title} from "@angular/platform-browser";
+import {NavService} from "../../providers/nav/nav.service";
 
 /**
  * Generated class for the TeamPage page.
@@ -22,12 +23,22 @@ import {Title} from "@angular/platform-browser";
 })
 export class TeamPage {
 
+  @ViewChild(Navbar) navbar: Navbar;
+
   constructor(
     private guideEventService: GuideEventService,
     public navCtrl: NavController,
-    public navParams: NavParams,
+    public navService: NavService,
     public titleService: Title,
   ) {
+  }
+
+  ionViewWillEnter() {
+    this.navbar.backButtonClick =
+      (e:UIEvent) => {
+        console.log("Responding to Back Button");
+        this.navService.goToPage("HomePage");
+      }
   }
 
   ionViewDidLoad() {

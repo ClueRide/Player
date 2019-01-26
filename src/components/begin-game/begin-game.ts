@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {NavController} from "ionic-angular";
 import {ServerEventsService} from "../../providers/server-events/server-events.service";
 import {OutingService} from "../../../../front-end-common/index";
+import {NavService} from "../../providers/nav/nav.service";
 
 /**
  * Generated class for the BeginGameComponent component.
@@ -16,7 +17,7 @@ import {OutingService} from "../../../../front-end-common/index";
 export class BeginGameComponent {
 
   constructor(
-    public navCtrl: NavController,
+    private navService: NavService,
     private outingService: OutingService,
     private serverEventsService: ServerEventsService,
   ) {
@@ -33,7 +34,7 @@ export class BeginGameComponent {
     );
 
     /* Kick us over to the Rolling Page's Map view. */
-    this.navCtrl.setRoot("RollingPage");
+    this.navService.goToPage("RollingPage");
   }
 
 }
