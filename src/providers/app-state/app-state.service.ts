@@ -1,10 +1,17 @@
 import {App, NavController} from "ionic-angular";
 import {AppState} from "./app-state";
 import {Injectable} from "@angular/core";
-import {RegistrationPage, InviteService, OutingService, SessionInviteState} from "front-end-common";
+import {
+  ConfirmationListener,
+  ConfirmationState,
+  InviteService,
+  OutingService,
+  ProfileConfirmationService,
+  RegistrationPage,
+  SessionInviteState
+} from "front-end-common";
 import {HomePage} from "../../pages/home/home";
 import {InvitePage} from "../../pages/invite/invite";
-import {ProfileService, ConfirmationListener, ConfirmationState} from "front-end-common";
 
 /**
  * Provides the logic for arranging Application State changes:
@@ -23,11 +30,11 @@ export class AppStateService implements ConfirmationListener {
   constructor(
     public app: App,
     public inviteService: InviteService,
-    public profileService: ProfileService,
+    public profileConfirmationService: ProfileConfirmationService,
     private outingService: OutingService,
   ) {
     /** Add ourselves to the list of profile listeners. */
-    profileService.listeners.push(this);
+    profileConfirmationService.listeners.push(this);
   }
 
   /**

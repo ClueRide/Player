@@ -13,12 +13,9 @@ import {ProfileService} from "front-end-common";
 })
 export class ProfileSummaryComponent {
 
-  profile: ProfileService;
-
   constructor(
-    profile: ProfileService
+    public profile: ProfileService
   ) {
-    this.profile = profile;
   }
 
 }

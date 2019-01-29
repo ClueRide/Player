@@ -1,22 +1,15 @@
 import {Component, Input} from "@angular/core";
-import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
-import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
 import {PathService, OutingView, Location, LocationService} from "front-end-common";
-
 import * as L from "leaflet";
 import {GameState} from "../../providers/game-state/game-state";
+import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 
 @Component({
   selector: 'rolling-map',
   templateUrl: 'rolling-map.html',
-  providers: [
-    GuideEventService,
-    GuideEventServiceProvider
-  ]
 })
 export class RollingMapComponent {
 
-  @Input() memberId: Number;
   @Input() outing: OutingView;
   @Input() gameState: GameState;
   map: any;
@@ -136,14 +129,11 @@ export class RollingMapComponent {
   }
 
   public isGuide(): boolean {
-    return this.memberId
-      && this.outing
-      && this.outing.guideMemberId
-      && this.outing.guideMemberId === this.memberId;
+    return this.guideEventService.isCurrentMemberGuide();
   }
 
   public signalArrival() {
-    this.guideEventService.arrival({});
+    this.guideEventService.sendArrival();
   }
 
 }

@@ -6,6 +6,7 @@ import {
   LocationService,
   OutingService,
   PathService,
+  ProfileService,
   PuzzleService,
   OutingView,
   TeamService,
@@ -28,6 +29,7 @@ export class HomePage {
     private courseService: CourseService,
     private pathService: PathService,
     private locationService: LocationService,
+    private profileService: ProfileService,
     private puzzleService: PuzzleService,
     private teamService: TeamService,
     public titleService: Title,
@@ -35,6 +37,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    this.profileService.loadMemberProfile();
     this.loadOutingData();
   }
 

@@ -11,6 +11,7 @@ import {AppStateService} from '../providers/app-state/app-state.service';
 import {BadgesPage} from "../pages/badges/badges";
 import {BadgesPageModule} from "../pages/badges/badges.module";
 import {GameStateService} from "../providers/game-state/game-state.service";
+import {GuideEventService} from '../providers/guide-event-service/guide-event-service';
 import {HomePage} from "../pages/home/home";
 import {InvitePage} from "../pages/invite/invite";
 import {InvitePageModule} from "../pages/invite/invite.module";
@@ -56,6 +57,7 @@ import {TeamPageModule} from "../pages/team/team-page.module";
   providers: [
     AppStateService,
     GameStateService,
+    GuideEventService,
     ServerEventsService,
     StatusBar,
     SplashScreen,

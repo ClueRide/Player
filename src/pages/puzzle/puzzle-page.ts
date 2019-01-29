@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage} from 'ionic-angular';
-import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
-import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
 import {LocationService, Puzzle, PuzzleService} from "front-end-common";
 import {Title} from "@angular/platform-browser";
+import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 
 /**
  * Generated class for the PuzzlePage page.
@@ -16,10 +15,6 @@ import {Title} from "@angular/platform-browser";
 @Component({
   selector: 'page-puzzle',
   templateUrl: 'puzzle.html',
-  providers: [
-    GuideEventService,
-    GuideEventServiceProvider
-  ],
 })
 export class PuzzlePage {
 
@@ -50,13 +45,12 @@ export class PuzzlePage {
     this.titleService.setTitle("Puzzle");
   }
 
-  // TODO: PLAY-31 Make this a proper assessment of the Guide's ability
   public isGuide(): boolean {
-    return true;
+    return this.guideEventService.isCurrentMemberGuide();
   }
 
   signalPuzzleSolved() {
-    this.guideEventService.departure({});
+    this.guideEventService.sendDeparture();
   }
 
 }
