@@ -55,7 +55,9 @@ export class RollingPage {
   }
 
   ngOnDestroy() {
-    this.gameStateSubscription.unsubscribe();
+    if (this.gameStateSubscription) {
+      this.gameStateSubscription.unsubscribe();
+    }
   }
 
 }

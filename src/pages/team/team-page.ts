@@ -1,9 +1,8 @@
 import {Component} from "@angular/core";
 import {IonicPage, NavController} from "ionic-angular";
-import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
-import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {Title} from "@angular/platform-browser";
 import {Team, TeamService} from "front-end-common";
+import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 
 /**
  * Generated class for the TeamPage page.
@@ -16,10 +15,6 @@ import {Team, TeamService} from "front-end-common";
 @Component({
   selector: 'page-team',
   templateUrl: 'team.html',
-  providers: [
-    GuideEventService,
-    GuideEventServiceProvider
-  ],
 })
 export class TeamPage {
 
@@ -47,13 +42,12 @@ export class TeamPage {
     this.titleService.setTitle("Team");
   }
 
-  // TODO: PLAY-31 Make this a proper assessment of the Guide's ability
   public isGuide(): boolean {
-    return true;
+    return this.guideEventService.isCurrentMemberGuide();
   }
 
   signalTeamAssembled() {
-    this.guideEventService.teamAssembled({});
+    this.guideEventService.sendTeamAssembled();
   }
 
 }

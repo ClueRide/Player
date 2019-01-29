@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Badge, BadgeService} from "front-end-common";
 import {NavController} from "ionic-angular";
 
@@ -14,38 +14,24 @@ import {NavController} from "ionic-angular";
 })
 export class BadgeSummaryComponent {
   badges: Array<Badge>;
-  badgeService: BadgeService;
-  private isGuideFlag: boolean = false;
 
   constructor(
-    badgeService: BadgeService,
+    private badgeService: BadgeService,
     public navCtrl: NavController
   ) {
-    this.badgeService = badgeService;
   }
 
   ngOnInit() {
+    /* Consider caching these. */
     this.badgeService.getList().subscribe(
       (response) => {
         this.badges = response;
-        this.badges.forEach(
-          badge => {
-            /* TODO: PLAY-31 Also need to match up the courses trained for. */
-            if (badge.badgeType === "GUIDE") {
-              this.isGuideFlag = true;
-            }
-          }
-        );
       }
     );
   }
 
   public viewDetails() {
     this.navCtrl.push("BadgesPage");
-  }
-
-  public isGuide() {
-    return this.isGuideFlag;
   }
 
 }
