@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {OutingService} from "front-end-common";
-import {OutingView} from "front-end-common";
+import {Component} from '@angular/core';
+import {IonicPage, NavController} from 'ionic-angular';
+import {OutingService, OutingView} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 
 /**
@@ -19,13 +18,13 @@ export class OutingPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public titleService: Title,
     public outingService: OutingService,
   ) {
     outingService.getSessionOuting().subscribe(
       /* Generally, the Outing has been cached. */
       (response) => {
+        console.log("Receiving Outing from Service");
         this.outing = response;
       }
     );

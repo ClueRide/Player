@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
-import {PathService, OutingView} from "../../../../front-end-common/index";
+import {PathService, OutingView, Location, LocationService} from "front-end-common";
 
 import * as L from "leaflet";
 import {GameState} from "../../providers/game-state/game-state";
@@ -23,28 +23,24 @@ export class RollingMapComponent {
   zoomLevel: number = 14;
   edgeLayer: any;
 
-  dummyCourse = {
-    pathIds: []
-  }
+  private greenLine = {
+    color: "#007700",
+    weight: 5,
+    opacity: .75
+  };
+
+  private blueLine = {
+    color: "#4040CC",
+    weight: 5,
+    opacity: .65
+  };
 
   constructor(
     private guideEventService: GuideEventService,
     private pathService: PathService,
+    private locationService: LocationService,
   ) {
     console.log('Hello RollingMapComponent Component');
-    // this.dummyCourse.pathIds.push(12);
-    // this.dummyCourse.pathIds.push(7);
-    // this.dummyCourse.pathIds.push(5);
-    // this.dummyCourse.pathIds.push(8);
-
-    this.dummyCourse.pathIds.push(6);
-    this.dummyCourse.pathIds.push(4);
-    this.dummyCourse.pathIds.push(3);
-    this.dummyCourse.pathIds.push(13);
-    this.dummyCourse.pathIds.push(9);
-    this.dummyCourse.pathIds.push(10);
-    this.dummyCourse.pathIds.push(2);
-
   }
 
   ngOnInit(): void {
@@ -63,7 +59,8 @@ export class RollingMapComponent {
 
     /* When changes come in, we throw them into the layer. */
     if (this.gameState) {
-      this.pathService.getPathGeoJson(this.dummyCourse.pathIds[this.gameState.pathIndex]).subscribe(
+      console.log("Rolling Map: ngOnInit placing path");
+      this.pathService.getPathGeoJsonByIndex(this.gameState.pathIndex).subscribe(
         (path) => {
           this.edgeLayer.addData(path);
         }
@@ -74,11 +71,6 @@ export class RollingMapComponent {
 
   ngOnChanges(changes) {
     console.log("rolling-map component: ngOnChanges()");
-    if (changes.outing) {
-      console.log("rolling-map component: Outing has changed");
-      console.log("previous: " + changes.outing.previousValue);
-      console.log("current: " + changes.outing.currentValue);
-    }
     if (changes.memberId) {
       console.log("rolling-map component: Member ID has changed");
       console.log("previous: " + changes.memberId.previousValue);
@@ -91,15 +83,45 @@ export class RollingMapComponent {
     }
     if (!changes.gameState) return;
 
-
     /* When changes come in, we throw them into the layer. */
     if (this.gameState) {
       console.log("State change to path index " + this.gameState.pathIndex);
-      this.pathService.getPathGeoJson(this.dummyCourse.pathIds[this.gameState.pathIndex]).subscribe(
-        (path) => {
-          this.edgeLayer.addData(path);
-        }
-      );
+      for (let i=0; i<=this.gameState.pathIndex; i++) {
+        console.log("ngOnChange: loading path for index " + i);
+        this.pathService.getPathGeoJsonByIndex(i).subscribe(
+          (path) => {
+            let pathColor = this.blueLine;
+            if (i == this.gameState.pathIndex) {
+              pathColor = this.greenLine;
+            }
+
+            let styledPath = L.geoJSON(path.features, {
+              style: pathColor
+            });
+
+            styledPath.addTo(this.map);
+          }
+        );
+      }
+
+      /* Add Locations to the Map. */
+      let locationList: Location[] = this.locationService
+        .getVisibleLocations(this.gameState.pathIndex);
+
+      for (let locationIndex in locationList) {
+        let location = locationList[locationIndex];
+        let locationPointFeature = {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [location.latLon.lon, location.latLon.lat]
+          }
+        };
+
+        L.geoJSON(locationPointFeature).addTo(this.map);
+
+      }
+
     } else {
       console.log('No Game State yet');
     }

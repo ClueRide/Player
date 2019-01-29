@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage} from 'ionic-angular';
 import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
+import {LocationService, Puzzle, PuzzleService} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 
 /**
@@ -22,10 +23,13 @@ import {Title} from "@angular/platform-browser";
 })
 export class PuzzlePage {
 
+  private puzzles: Puzzle[];
+  puzzle: Puzzle = new Puzzle();
+
   constructor(
     private guideEventService: GuideEventService,
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private puzzleService: PuzzleService,
+    private locationService: LocationService,
     public titleService: Title,
   ) {
 
@@ -33,6 +37,12 @@ export class PuzzlePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PuzzlePage');
+
+    let locationId = this.locationService.getCurrentLocationId();
+    this.puzzles = this.puzzleService.getPuzzlesPerLocationId(locationId);
+    if (this.puzzles && this.puzzles.length > 0) {
+      this.puzzle = this.puzzles[0];
+    }
   }
 
   ionViewDidEnter() {

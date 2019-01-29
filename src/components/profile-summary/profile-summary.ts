@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {ProfileService} from "../../../../front-end-common/src/providers/profile/profile.service";
+import {Component} from '@angular/core';
+import {ProfileService} from "front-end-common";
 
 /**
  * Generated class for the ProfileSummaryComponent component.

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController} from "ionic-angular";
 import {ServerEventsService} from "../../providers/server-events/server-events.service";
-import {OutingService} from "../../../../front-end-common/index";
+import {OutingService} from "front-end-common";
 
 /**
  * Generated class for the BeginGameComponent component.

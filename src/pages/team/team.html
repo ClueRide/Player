@@ -10,13 +10,17 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Team</ion-title>
+    <ion-title>{{team.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <li *ngFor="let member of team.members">
+    {{member.displayName}}
+  </li>
+
   <div *ngIf="isGuide()">
     <ion-fab left bottom>
       <button ion-fab mini (tap)="signalTeamAssembled()">

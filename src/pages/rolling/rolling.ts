@@ -2,8 +2,9 @@ import {Component} from "@angular/core";
 import {GameState} from "../../providers/game-state/game-state";
 import {GameStateService} from "../../providers/game-state/game-state.service";
 import {IonicPage} from "ionic-angular";
-import {OutingService, OutingView} from "../../../../front-end-common/index";
+import {OutingService, OutingView} from "front-end-common";
 import {Title} from "@angular/platform-browser";
+import {Subscription} from "rxjs";
 
 /**
  * Presents the map for the game while "Rolling".
@@ -16,13 +17,11 @@ import {Title} from "@angular/platform-browser";
 @Component({
   selector: 'page-rolling',
   templateUrl: 'rolling.html',
-  providers: [
-    OutingService,
-  ],
 })
 export class RollingPage {
   outing: OutingView;
   gameState: GameState;
+  gameStateSubscription: Subscription;
 
   constructor(
     private gameStateService: GameStateService,
@@ -35,19 +34,16 @@ export class RollingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RollingPage');
 
-    // TODO: CA-376 how to establish Outing?
-    const outingId = 1;
-
     this.outingService.getSessionOuting().subscribe(
       (outing) => {
         this.outing = outing;
       }
     );
 
-    this.gameStateService.getGameStateObservable().subscribe(
+    this.gameStateSubscription = this.gameStateService.getGameStateObservable().subscribe(
       (gameState) => {
         console.log("Rolling Page: Updating Game State");
-        this.gameState = Object.assign({}, gameState);
+        this.gameState = gameState;
       }
     );
 
@@ -56,6 +52,10 @@ export class RollingPage {
   ionViewDidEnter() {
     console.log("RollingPage.ionViewDidEnter");
     this.titleService.setTitle("Rolling");
+  }
+
+  ngOnDestroy() {
+    this.gameStateSubscription.unsubscribe();
   }
 
 }
