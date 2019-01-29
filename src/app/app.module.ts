@@ -16,12 +16,14 @@ import {InvitePage} from "../pages/invite/invite";
 import {InvitePageModule} from "../pages/invite/invite.module";
 import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
+import {PuzzlePage} from "../pages/puzzle/puzzle-page";
+import {PuzzlePageModule} from "../pages/puzzle/puzzle-page.module";
 import {RollingPage} from "../pages/rolling/rolling";
 import {RollingPageModule} from "../pages/rolling/rolling.module";
 import {ServerEventsService} from "../providers/server-events/server-events.service";
 import {SummaryComponentsModule} from "../components/components.module";
-import {TeamPage} from "../pages/team/team";
-import {TeamPageModule} from "../pages/team/team.module";
+import {TeamPage} from "../pages/team/team-page";
+import {TeamPageModule} from "../pages/team/team-page.module";
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import {TeamPageModule} from "../pages/team/team.module";
     IonicModule.forRoot(MyApp),
     ComponentsModule.forRoot(),
     InvitePageModule,
+    PuzzlePageModule,
     RollingPageModule,
     OutingPageModule,
     SummaryComponentsModule,
@@ -46,6 +49,7 @@ import {TeamPageModule} from "../pages/team/team.module";
     HomePage,
     InvitePage,
     OutingPage,
+    PuzzlePage,
     RollingPage,
     TeamPage,
   ],

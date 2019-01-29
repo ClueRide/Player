@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {EventSourcePolyfill} from "ng-event-source";
 import {GameStateService} from "../game-state/game-state.service";
-import {TokenService} from "../../../../front-end-common/index";
+import {TokenService} from "front-end-common";
 
 const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
 

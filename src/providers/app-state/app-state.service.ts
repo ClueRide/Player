@@ -1,10 +1,10 @@
 import {App, NavController} from "ionic-angular";
 import {AppState} from "./app-state";
 import {Injectable} from "@angular/core";
-import {RegistrationPage, InviteService, OutingService, SessionInviteState} from "../../../../front-end-common/index";
+import {RegistrationPage, InviteService, OutingService, SessionInviteState} from "front-end-common";
 import {HomePage} from "../../pages/home/home";
 import {InvitePage} from "../../pages/invite/invite";
-import {ProfileService, ConfirmationListener, ConfirmationState} from "../../../../front-end-common/src/providers/profile/profile.service";
+import {ProfileService, ConfirmationListener, ConfirmationState} from "front-end-common";
 
 /**
  * Provides the logic for arranging Application State changes:

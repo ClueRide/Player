@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { PuzzlePage } from './puzzle';
+import { PuzzlePage } from './puzzle-page';
 
 @NgModule({
   declarations: [

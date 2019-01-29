@@ -1,8 +1,9 @@
 import {Component} from "@angular/core";
-import {IonicPage, NavController, NavParams} from "ionic-angular";
+import {IonicPage, NavController} from "ionic-angular";
 import {GuideEventService} from "../../providers/resources/guide-events/guide-event.service";
 import {GuideEventServiceProvider} from "../../providers/resources/guide-events/guide-event.service.provider";
 import {Title} from "@angular/platform-browser";
+import {Team, TeamService} from "front-end-common";
 
 /**
  * Generated class for the TeamPage page.
@@ -22,16 +23,23 @@ import {Title} from "@angular/platform-browser";
 })
 export class TeamPage {
 
+  public team: Team = {
+    id: 0,
+    name: 'Team',
+    members: []
+  };
+
   constructor(
     private guideEventService: GuideEventService,
+    private teamService: TeamService,
     public navCtrl: NavController,
-    public navParams: NavParams,
     public titleService: Title,
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TeamPage');
+    this.team = this.teamService.getTeam();
   }
 
   ionViewDidEnter() {
