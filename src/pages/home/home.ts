@@ -5,10 +5,9 @@ import {
   CourseService,
   LocationService,
   OutingService,
-  PathService,
+  OutingView,
   ProfileService,
   PuzzleService,
-  OutingView,
   TeamService,
 } from "front-end-common";
 import {Title} from "@angular/platform-browser";
@@ -27,7 +26,6 @@ export class HomePage {
 
     private outingService: OutingService,
     private courseService: CourseService,
-    private pathService: PathService,
     private locationService: LocationService,
     private profileService: ProfileService,
     private puzzleService: PuzzleService,
