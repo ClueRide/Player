@@ -2,7 +2,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
   BASE_URL,
-  HttpService,
   OutingService,
   ProfileService,
   TokenService
@@ -24,7 +23,7 @@ export class GuideEventService {
   ) {
     console.log('Hello GuideEventService Provider');
     this.httpOptions = new HttpHeaders({
-      'Authorization': 'Bearer ' + tokenService.getBearerToken()
+      'Authorization': 'Bearer ' + this.tokenService.getBearerToken()
     })
   }
 
