@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Location, LocationService} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 
 /**
@@ -16,11 +17,17 @@ import {Title} from "@angular/platform-browser";
 })
 export class LocationPage {
 
+  public location: Location;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public titleService: Title,
+    public locationService: LocationService,
   ) {
+    this.location = this.locationService.getLocation(
+      navParams.get("id")
+    );
   }
 
   ionViewDidLoad() {

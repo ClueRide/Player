@@ -7,12 +7,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Location</ion-title>
+    <ion-title>{{location.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <img [src]="location.featuredImage">
+  <div class="description-text">
+    {{location.description}}
+  </div>
 </ion-content>

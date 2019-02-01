@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {GameState} from "../../providers/game-state/game-state";
 import {GameStateService} from "../../providers/game-state/game-state.service";
-import {IonicPage} from "ionic-angular";
+import {IonicPage, NavController} from "ionic-angular";
 import {OutingService, OutingView} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 import {Subscription} from "rxjs";
@@ -27,6 +27,7 @@ export class RollingPage {
     private gameStateService: GameStateService,
     public outingService: OutingService,
     public titleService: Title,
+    public navCtrl: NavController,  /* Template passes this to sub-components */
   ) {
     console.log("Hello RollingPage");
   }
