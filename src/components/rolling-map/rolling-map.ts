@@ -1,8 +1,9 @@
 import {Component, Input} from "@angular/core";
-import {PathService, OutingView, Location, LocationService} from "front-end-common";
+import {Location, LocationService, OutingView, PathService} from "front-end-common";
 import * as L from "leaflet";
 import {GameState} from "../../providers/game-state/game-state";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
+import {NavController} from "ionic-angular";
 
 @Component({
   selector: 'rolling-map',
@@ -12,6 +13,7 @@ export class RollingMapComponent {
 
   @Input() outing: OutingView;
   @Input() gameState: GameState;
+  @Input() navCtrl: NavController;
   map: any;
   zoomLevel: number = 14;
   edgeLayer: any;
@@ -159,19 +161,19 @@ export class RollingMapComponent {
       L.latLng(location.latLon),
       {
         id: location.id,
-        title: location.name
+        title: location.name,
+        navCtrl: this.navCtrl,
       }
     );
 
-    marker.on('click', this.goToLocation);
+    marker.on('click', this.onLocationMarker);
 
     marker.addTo(this.edgeLayer);
   }
 
-  private goToLocation(e) {
+  public onLocationMarker(e) {
     let details = e.target.options;
-    console.log('ID ' + details.id + ': ' + details.title);
-    /* Pulling up a Location Page goes here. */
+    details.navCtrl.push("LocationPage", {'id': details.id });
   }
 
   /* Cleanup after ourselves. */
