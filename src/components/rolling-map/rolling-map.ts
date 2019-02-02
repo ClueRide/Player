@@ -106,9 +106,12 @@ export class RollingMapComponent {
     console.log("State change to path index " + this.gameState.pathIndex);
     for (let i = 0; i <= this.gameState.pathIndex; i++) {
       console.log("ngOnChange: loading path for index " + i);
+      /* TODO: Should be able to cache these. */
       this.pathService.getPathGeoJsonByIndex(i).subscribe(
         (path) => {
           let pathColor = this.blueLine;
+
+          /* Adjust color of last path added. */
           if (i == this.gameState.pathIndex) {
             pathColor = this.greenLine;
           }
@@ -118,6 +121,11 @@ export class RollingMapComponent {
           });
 
           styledPath.addTo(this.map);
+
+          /* Adjust map zoom/center to fit the last path added. */
+          if (i == this.gameState.pathIndex) {
+            this.map.fitBounds(styledPath.getBounds().pad(.2));
+          }
         }
       );
     }
