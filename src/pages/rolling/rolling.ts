@@ -41,7 +41,7 @@ export class RollingPage {
       }
     );
 
-    this.gameStateSubscription = this.gameStateService.getGameStateObservable().subscribe(
+    this.gameStateSubscription = this.gameStateService.requestGameState().subscribe(
       (gameState) => {
         console.log("Rolling Page: Updating Game State");
         this.gameState = gameState;
