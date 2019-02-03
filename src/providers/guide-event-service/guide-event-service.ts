@@ -24,7 +24,7 @@ export class GuideEventService {
     console.log('Hello GuideEventService Provider');
     this.httpOptions = new HttpHeaders({
       'Authorization': 'Bearer ' + this.tokenService.getBearerToken()
-    })
+    });
   }
 
   public sendArrival() {
