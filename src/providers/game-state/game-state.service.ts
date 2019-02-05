@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
 import {App, NavController} from "ionic-angular";
 import {GameState} from "./game-state";
-import {Observable, Subject} from "rxjs";
-import {BASE_URL, TokenService} from "front-end-common";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BASE_URL, HttpService} from "front-end-common";
+import {HttpClient} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {Observable, Subject} from "../../../../front-end-common/node_modules/rxjs";
 
 /** Drives updating the Team Members synchronously between
  * Sleuthing (upon Arrival) and Rolling (upon Departure).
@@ -13,17 +13,12 @@ export class GameStateService {
   private gameStateSubject: Subject<GameState> = new Subject();
   private gameStateObservable: Observable<GameState> = this.gameStateSubject.asObservable();
 
-  private httpOptions;
-
   constructor(
     public app: App,
     private http: HttpClient,
-    private tokenService: TokenService,
+    private httpService: HttpService,
   ) {
     console.log('Hello GameStateService Provider');
-    this.httpOptions = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.tokenService.getBearerToken()
-    });
   }
 
   /**
@@ -45,11 +40,13 @@ export class GameStateService {
         (
           <NavController>this.app.getRootNavById('n4')
         ).setRoot(
-          "RollingPage"
+          "RollingPage",
+          {
+            gameState: event.gameState
+          }
         ).then(
           () => {
             console.log("After Page Navigation completes: GameState is " + JSON.stringify(event.gameState));
-            this.gameStateSubject.next(event.gameState);
           }
         );
         break;
@@ -71,7 +68,7 @@ export class GameStateService {
     this.http.get(
       BASE_URL + 'game-state',
       {
-        headers: this.httpOptions
+        headers: this.httpService.getAuthHeaders()
       }
     ).subscribe(
       (response) => {
@@ -83,6 +80,30 @@ export class GameStateService {
 
   getGameStateObservable(): Observable<GameState> {
     return this.gameStateObservable;
+  }
+
+  public beginGame(): void {
+    this.requestGameState().subscribe(
+      (gameState) => {
+        if (gameState.pathIndex < 0
+          || !gameState.teamAssembled
+          || gameState.rolling
+        ) {
+          /* Show the Rolling Page */
+          (
+            <NavController>this.app.getRootNavById('n4')
+          ).setRoot(
+            "RollingPage",
+            {
+              gameState: gameState
+            }
+          );
+        } else {
+          /* Show the Puzzle */
+          (<NavController>this.app.getRootNavById('n4')).setRoot("PuzzlePage");
+        }
+      }
+    );
   }
 
 }

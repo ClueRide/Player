@@ -1,10 +1,10 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
   BASE_URL,
   OutingService,
   ProfileService,
-  TokenService
+  HttpService
 } from "front-end-common";
 
 /**
@@ -13,18 +13,13 @@ import {
 @Injectable()
 export class GuideEventService {
 
-  private httpOptions;
-
   constructor(
     public http: HttpClient,
     private profileService: ProfileService,
     private outingService: OutingService,
-    private tokenService: TokenService,
+    private httpService: HttpService,
   ) {
     console.log('Hello GuideEventService Provider');
-    this.httpOptions = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.tokenService.getBearerToken()
-    });
   }
 
   public sendArrival() {
@@ -32,7 +27,7 @@ export class GuideEventService {
       BASE_URL + 'game-state/arrival',
       null,
       {
-        headers: this.httpOptions
+        headers: this.httpService.getAuthHeaders()
       }
     ).subscribe(
       () => {
@@ -46,7 +41,7 @@ export class GuideEventService {
       BASE_URL + 'game-state/departure',
       null,
       {
-        headers: this.httpOptions
+        headers: this.httpService.getAuthHeaders()
       }
     ).subscribe(
       () => {
@@ -60,7 +55,7 @@ export class GuideEventService {
       BASE_URL + 'game-state/team-assembled',
       null,
       {
-        headers: this.httpOptions
+        headers: this.httpService.getAuthHeaders()
       }
     ).subscribe(
       () => {

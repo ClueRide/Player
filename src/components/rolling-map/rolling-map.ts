@@ -3,6 +3,7 @@ import {Location, LocationService, OutingView, PathService} from "front-end-comm
 import * as L from "leaflet";
 import {GameState} from "../../providers/game-state/game-state";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
+import {LoadStateService} from "../../providers/load-state/load-state.service";
 import {NavController} from "ionic-angular";
 
 @Component({
@@ -35,6 +36,7 @@ export class RollingMapComponent {
     private guideEventService: GuideEventService,
     private pathService: PathService,
     private locationService: LocationService,
+    private loadStateService: LoadStateService,
   ) {
     console.log('Hello RollingMapComponent Component');
   }
@@ -59,7 +61,7 @@ export class RollingMapComponent {
     this.edgeLayer = L.geoJSON().addTo(this.map);
 
     /* When changes come in, we throw them into the layer. */
-    if (this.gameState) {
+    if (this.gameState && this.gameState.pathIndex >= 0) {
       console.log("Rolling Map: ngOnInit placing path");
       this.pathService.getPathGeoJsonByIndex(this.gameState.pathIndex).subscribe(
         (path) => {
@@ -75,6 +77,10 @@ export class RollingMapComponent {
 
   ngOnChanges(changes) {
     console.log("rolling-map component: ngOnChanges()");
+    if (!this.loadStateService.isLoadComplete()) {
+      console.log("Waiting for Load to Complete");
+      return;
+    }
     if (changes.memberId) {
       console.log("rolling-map component: Member ID has changed");
       console.log("previous: " + changes.memberId.previousValue);
@@ -88,7 +94,9 @@ export class RollingMapComponent {
 
     if (!changes.gameState) return;
 
-    if (this.firstTimeThrough) {
+    if ( this.firstTimeThrough
+      && this.loadStateService.isLoadComplete()
+    ) {
       this.prepareRollingMap();
       this.firstTimeThrough = false;
     }
@@ -104,6 +112,7 @@ export class RollingMapComponent {
 
   private updatePathsOnMap() {
     console.log("State change to path index " + this.gameState.pathIndex);
+    if (this.gameState.pathIndex < 0) return;
     for (let i = 0; i <= this.gameState.pathIndex; i++) {
       console.log("ngOnChange: loading path for index " + i);
       /* TODO: Should be able to cache these. */

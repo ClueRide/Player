@@ -1,16 +1,11 @@
 import {Component} from "@angular/core";
 import {GameState} from "../../providers/game-state/game-state";
-import {GameStateService} from "../../providers/game-state/game-state.service";
-import {IonicPage, NavController} from "ionic-angular";
+import {IonicPage, NavController, NavParams} from "ionic-angular";
 import {OutingService, OutingView} from "front-end-common";
 import {Title} from "@angular/platform-browser";
-import {Subscription} from "rxjs";
 
 /**
  * Presents the map for the game while "Rolling".
- *
- * This serves as the "root" of a game tree of pages, whose state changes are driven
- * by the subscription to the Game State (via the ServerEventsService).
  */
 
 @IonicPage()
@@ -21,15 +16,15 @@ import {Subscription} from "rxjs";
 export class RollingPage {
   outing: OutingView;
   gameState: GameState;
-  gameStateSubscription: Subscription;
 
   constructor(
-    private gameStateService: GameStateService,
     public outingService: OutingService,
     public titleService: Title,
     public navCtrl: NavController,  /* Template passes this to sub-components */
+    public navParams: NavParams,
   ) {
     console.log("Hello RollingPage");
+    this.gameState = navParams.get('gameState');
   }
 
   ionViewDidLoad() {
@@ -41,24 +36,11 @@ export class RollingPage {
       }
     );
 
-    this.gameStateSubscription = this.gameStateService.requestGameState().subscribe(
-      (gameState) => {
-        console.log("Rolling Page: Updating Game State");
-        this.gameState = gameState;
-      }
-    );
-
   }
 
   ionViewDidEnter() {
     console.log("RollingPage.ionViewDidEnter");
     this.titleService.setTitle("Rolling");
-  }
-
-  ngOnDestroy() {
-    if (this.gameStateSubscription) {
-      this.gameStateSubscription.unsubscribe();
-    }
   }
 
 }
