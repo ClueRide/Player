@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from "ionic-angular";
-import {ServerEventsService} from "../../providers/server-events/server-events.service";
-import {OutingService} from "front-end-common";
+import {GameStateService} from "../../providers/game-state/game-state.service";
 
 /**
  * Generated class for the BeginGameComponent component.
@@ -17,23 +16,13 @@ export class BeginGameComponent {
 
   constructor(
     public navCtrl: NavController,
-    private outingService: OutingService,
-    private serverEventsService: ServerEventsService,
+    private gameStateService: GameStateService,
   ) {
   }
 
   public beginGame() {
     console.log('Beginning Game');
-
-    /* Request the session's outing and use the response to setup Game State subscriptions against the outing. */
-    this.outingService.getSessionOuting(). subscribe(
-      (outingView) => {
-        this.serverEventsService.initializeSubscriptions(outingView.id);
-      }
-    );
-
-    /* Kick us over to the Rolling Page's Map view. */
-    this.navCtrl.setRoot("RollingPage");
+    this.gameStateService.beginGame();
   }
 
 }

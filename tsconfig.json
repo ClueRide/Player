@@ -12,7 +12,9 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "front-end-common": ["../front-end-common/index"]
+      "front-end-common": ["../front-end-common/index"],
+      "rxjs/*": ["../front-end-common/node_modules/rxjs/*"],
+      "@angular/common/*": ["../front-end-common/node_modules/@angular/common/*"]
     },
     "sourceMap": true,
     "target": "es5"

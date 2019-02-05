@@ -15,6 +15,7 @@ import {GuideEventService} from '../providers/guide-event-service/guide-event-se
 import {HomePage} from "../pages/home/home";
 import {InvitePage} from "../pages/invite/invite";
 import {InvitePageModule} from "../pages/invite/invite.module";
+import {LoadStateService} from '../providers/load-state/load-state.service';
 import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
 import {PuzzlePage} from "../pages/puzzle/puzzle-page";
@@ -58,6 +59,7 @@ import {TeamPageModule} from "../pages/team/team-page.module";
     AppStateService,
     GameStateService,
     GuideEventService,
+    LoadStateService,
     ServerEventsService,
     StatusBar,
     SplashScreen,
