@@ -24,7 +24,11 @@ export class LocationPage {
     name: "",
     description: "",
     latLon: null,
-    geoJson: null
+    geoJson: null,
+    featuredImage: {
+      id: null,
+      url: null
+    }
   };
 
   constructor(
