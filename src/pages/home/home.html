@@ -20,7 +20,7 @@
 
   <begin-game></begin-game>
 
-  <div id="bdd-only" [hidden]="!auth.runningLocal()">
+  <div id="bdd-only" [hidden]="!platform.runningLocal()">
     <div class="section-heading">Test Only</div>
     <button class="bdd-only" ion-button (click) = "auth.logout()">De-Register</button>
   </div>

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {AuthService, ProfileService,} from "front-end-common";
+import {AuthService, ProfileService, PlatformStateService,} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 import {LoadStateService} from "../../providers/load-state/load-state.service";
 
@@ -12,6 +12,7 @@ export class HomePage {
   constructor(
     /* Used on the HTML page: */
     public auth: AuthService,
+    public platform: PlatformStateService,
     private loadStateService: LoadStateService,
     private profileService: ProfileService,
     public titleService: Title,

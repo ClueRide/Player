@@ -1,7 +1,7 @@
 import {AppState} from "../providers/app-state/app-state";
 import {AppStateService} from "../providers/app-state/app-state.service";
 import Auth0Cordova from "@auth0/cordova";
-import {AuthService} from "front-end-common";
+import {AuthService, PlatformStateService} from "front-end-common";
 import {Component, ViewChild} from "@angular/core";
 import {Nav, Platform} from "ionic-angular";
 import {Observable} from "rxjs/Observable";
@@ -32,6 +32,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public authService: AuthService,
     public appStateService: AppStateService,
+    public platformService: PlatformStateService,
   ) {
     this.initializeApp();
 
@@ -50,7 +51,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      if (!this.authService.runningLocal()) {
+      if (!this.platformService.runningLocal()) {
         /* Since this is a cordova native statusbar, only set style if not within a browser (local). */
         this.statusBar.styleDefault();
       }
@@ -101,7 +102,7 @@ export class MyApp {
 
         pageReadyPromise.then(
           () => {
-            if (!this.authService.runningLocal()) {
+            if (!this.platformService.runningLocal()) {
               /* Splash screen is native only. */
               this.splashScreen.hide();
             }
