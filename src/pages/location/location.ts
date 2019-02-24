@@ -21,14 +21,16 @@ export class LocationPage {
   /* Initialize to empty object. */
   public location: Location = {
     id: null,
+    nodeId: null,
+    locationTypeId: null,
     name: "",
     description: "",
     latLon: null,
-    geoJson: null,
     featuredImage: {
       id: null,
       url: null
-    }
+    },
+    readinessLevel: null
   };
 
   constructor(
