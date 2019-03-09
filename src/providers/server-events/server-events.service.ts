@@ -1,6 +1,9 @@
-import {Injectable} from '@angular/core';
-import {EventSourcePolyfill} from "ng-event-source";
+import {AnswerSummary} from "../answer-summary/answer-summary";
+import {EventSourcePolyfill, OnMessageEvent} from "ng-event-source";
+import {fromEvent} from "../../../../front-end-common/node_modules/rxjs/observable/fromEvent";
 import {GameStateService} from "../game-state/game-state.service";
+import {Injectable} from '@angular/core';
+import {Observable} from "../../../../front-end-common/node_modules/rxjs/Observable";
 import {TokenService} from "front-end-common";
 
 const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
@@ -12,6 +15,7 @@ const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
 export class ServerEventsService {
 
   private eventSource: EventSourcePolyfill;
+  private answerSummary$: Observable<OnMessageEvent>;
 
   constructor(
     private tokenService: TokenService,
@@ -40,8 +44,9 @@ export class ServerEventsService {
         }
       );
 
+      /* Standard event definitions. */
       this.eventSource.onmessage = (
-        (messageEvent) => {
+        (messageEvent: OnMessageEvent) => {
           console.log("SSE Message: " + JSON.stringify(messageEvent.data));
           this.gameStateService.updateFromEvent(messageEvent.data);
         }
@@ -59,7 +64,23 @@ export class ServerEventsService {
         }
       );
 
+      /* Custom event definitions. */
+      this.answerSummary$ = fromEvent(
+        this.eventSource,
+        'answer-summary'
+      );
+
     }
+
+  }
+
+  /**
+   * Observable that streams the answer-summary events.
+   */
+  public getAnswerSummaryObservable(): Observable<AnswerSummary> {
+    return this.answerSummary$.map(
+      event => JSON.parse(event.data)
+    );
   }
 
 }
