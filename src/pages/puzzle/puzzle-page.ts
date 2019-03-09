@@ -3,6 +3,8 @@ import {IonicPage} from 'ionic-angular';
 import {LocationService, Puzzle, PuzzleService} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
+import {AnswerSummaryService} from "../../providers/answer-summary/answer-summary.service";
+import {AnswerKey} from "../../../../front-end-common/src/providers/puzzle/answer";
 
 /**
  * Generated class for the PuzzlePage page.
@@ -24,6 +26,7 @@ export class PuzzlePage {
   constructor(
     private guideEventService: GuideEventService,
     private puzzleService: PuzzleService,
+    private answerSummaryService: AnswerSummaryService,
     private locationService: LocationService,
     public titleService: Title,
   ) {

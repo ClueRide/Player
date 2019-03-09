@@ -7,6 +7,7 @@ import {MyApp} from "./app.component";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
 
+import {AnswerSummaryService} from '../providers/answer-summary/answer-summary.service';
 import {AppStateService} from '../providers/app-state/app-state.service';
 import {BadgesPage} from "../pages/badges/badges";
 import {BadgesPageModule} from "../pages/badges/badges.module";
@@ -56,6 +57,7 @@ import {TeamPageModule} from "../pages/team/team-page.module";
     TeamPage,
   ],
   providers: [
+    AnswerSummaryService,
     AppStateService,
     GameStateService,
     GuideEventService,
