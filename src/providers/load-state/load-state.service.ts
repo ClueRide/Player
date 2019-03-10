@@ -1,21 +1,25 @@
 import {
-  Course,
   CourseService,
   LocationService,
   OutingService,
   OutingView,
+  PathService,
   PuzzleService,
   TeamService,
 } from "front-end-common";
 import {Injectable} from '@angular/core';
 import {GameStateService} from "../game-state/game-state.service";
-import {GameState} from "../game-state/game-state";
 import {ServerEventsService} from "../server-events/server-events.service";
-import {Subject, Observable} from "../../../../front-end-common/node_modules/rxjs";
+import {Observable, Subject} from "../../../../front-end-common/node_modules/rxjs";
 
-/** Service for being smart about getting all cached up
+/**
+ * Service for being smart about getting all cached up
  * with a given Outing, and waits until it has the GameState
  * before it will report that we're all cached up.
+ *
+ * This service doesn't hold any of the cached data -- the
+ * individual services do that. Only the state of loading
+ * is tracked here.
  *
  * See http://bikehighways.wikidot.com/caching-services
  * for a diagram that helps see what's dependent on what.
@@ -24,23 +28,24 @@ import {Subject, Observable} from "../../../../front-end-common/node_modules/rxj
 export class LoadStateService {
 
   private outing: OutingView;
-  private course: Course;
-  private gameState: GameState;
   private allCachedUp: boolean = false;
   private loadInProgress: boolean = false;
-  public loadStateSubject: Subject<boolean> = new Subject<boolean>();
-  public loadStateObservable: Observable<boolean> = this.loadStateSubject.asObservable();
+  public loadStateSubject: Subject<boolean>;
+  public loadStateObservable: Observable<boolean>;
 
   constructor(
     private outingService: OutingService,
     private courseService: CourseService,
     private gameStateService: GameStateService,
     private locationService: LocationService,
+    private pathService: PathService,
     private serverEventsService: ServerEventsService,
     private puzzleService: PuzzleService,
     private teamService: TeamService,
   ) {
     console.log('Hello LoadStateService');
+    this.loadStateSubject = new Subject<boolean>();
+    this.loadStateObservable = this.loadStateSubject.asObservable();
   }
 
   /**
@@ -78,9 +83,10 @@ export class LoadStateService {
     this.courseService.getSessionCourse()
       .takeUntil(this.loadStateObservable)
       .subscribe(
-      (response) => {
-        this.course = response;
+      (course) => {
+        /* Kick off loads of everything needing the Course. */
         this.loadLocationData();
+        this.pathService.loadPaths(course);
       }
     );
 
@@ -108,14 +114,17 @@ export class LoadStateService {
   }
 
   private loadGameState() {
+    /* This service doesn't use the game state.
+     * It only makes sure the server has game state available before proceeding. */
     this.gameStateService.requestGameState()
       .takeUntil(this.loadStateObservable)
       .subscribe(
       (response) => {
         /* Signal we're done. */
         this.loadStateSubject.next(true);
-        this.gameState = response;
         this.allCachedUp = true;
+        /* Turns on SSE against our session's Outing ID. */
+        // TODO: When does this turn off? Application life-cycle?
         this.serverEventsService.initializeSubscriptions(
           this.outing.id
         );
