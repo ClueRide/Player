@@ -1,6 +1,8 @@
 export class GameState {
   teamAssembled: boolean;
   rolling: boolean;
-  nextLocation: string;
+  nextLocationName: string;
   pathIndex: number;
+  locationId: number;
+  puzzleId: number;
 }

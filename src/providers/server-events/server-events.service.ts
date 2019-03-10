@@ -1,9 +1,9 @@
 import {AnswerSummary} from "../answer-summary/answer-summary";
 import {EventSourcePolyfill, OnMessageEvent} from "ng-event-source";
-import {fromEvent} from "../../../../front-end-common/node_modules/rxjs/observable/fromEvent";
+import {fromEvent} from "rxjs/observable/fromEvent";
 import {GameStateService} from "../game-state/game-state.service";
 import {Injectable} from '@angular/core';
-import {Observable} from "../../../../front-end-common/node_modules/rxjs/Observable";
+import {Observable} from "rxjs/Observable";
 import {TokenService} from "front-end-common";
 
 const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';

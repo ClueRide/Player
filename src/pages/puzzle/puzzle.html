@@ -7,68 +7,35 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Puzzle</ion-title>
+    <ion-title>
+      {{puzzle.name}}
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
   <ion-grid>
 
-    <ion-row>
-      <ion-col col-2>
-        <ion-label>Name</ion-label>
-      </ion-col>
-      <ion-col col-10>
-        <ion-input class="value-field"
-                   [(ngModel)]="puzzle.name">
-        </ion-input>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col col-3>
-        <ion-label>Question</ion-label>
-      </ion-col>
-      <ion-col col-9>
-        <ion-textarea class="value-field"
-                      [(ngModel)]="puzzle.question">
-        </ion-textarea>
-      </ion-col>
-    </ion-row>
+    <div class="question">
+      {{puzzle.question}}
+    </div>
 
     <!-- Answer Section -->
-    <ion-row *ngFor="let answer of puzzle.answers">
-      <ion-col col-1 (click)="selectCorrectAnswer(answer.key)">
-        <ion-label>{{answer.key}}:</ion-label>
-      </ion-col>
-      <ion-col col-11>
-        <ion-textarea class="value-field"
-                      [ngClass]="{
-                      'correct-answer': answer.key == puzzle.correctAnswer,
-                      'incorrect-answer': answer.key !== puzzle.correctAnswer
-                    }"
-                      [(ngModel)]="answer.answer">
-        </ion-textarea>
-      </ion-col>
-    </ion-row>
-
-    <!-- Correct Answer -->
-    <ion-row>
-      <ion-col col-6>
-        <ion-label>
-          Correct Answer
-        </ion-label>
-      </ion-col>
-      <ion-col col-6>
-        <ion-label class="left-label">
-          {{puzzle.correctAnswer}}
-        </ion-label>
-      </ion-col>
-    </ion-row>
+    <ion-buttons>
+      <div class="answer"
+           *ngFor="let answer of puzzle.answers"
+      >
+        <button ion-button round text-wrap style="height: 75px"
+                (click)="selectAsAnswer(answer.key)"
+        >
+          {{answer.key}}: {{answer.answer}}
+        </button>
+      </div>
+    </ion-buttons>
 
   </ion-grid>
+
   <div *ngIf="isGuide()">
     <ion-fab left bottom>
       <button ion-fab mini (tap)="signalPuzzleSolved()">
