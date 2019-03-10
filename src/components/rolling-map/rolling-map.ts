@@ -5,6 +5,10 @@ import {GameState} from "../../providers/game-state/game-state";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 import {LoadStateService} from "../../providers/load-state/load-state.service";
 import {NavController} from "ionic-angular";
+import {Path} from "../../../../front-end-common/src/providers/path/path";
+import {from} from "rxjs/observable/from";
+import {range} from "rxjs/observable/range";
+import {tap} from "rxjs/operators/tap";
 
 @Component({
   selector: 'rolling-map',
@@ -20,13 +24,13 @@ export class RollingMapComponent {
   edgeLayer: any;
 
   private greenLine = {
-    color: "#007700",
+    color: "#00AA00",
     weight: 5,
     opacity: .75
   };
 
   private blueLine = {
-    color: "#4040CC",
+    color: "#4040FF",
     weight: 5,
     opacity: .65
   };
@@ -60,16 +64,7 @@ export class RollingMapComponent {
     /* Providing a layer upon which we pile on the stuff we show the user should be easier this way. */
     this.edgeLayer = L.geoJSON().addTo(this.map);
 
-    /* When changes come in, we throw them into the layer. */
-    if (this.gameState && this.gameState.pathIndex >= 0) {
-      console.log("Rolling Map: ngOnInit placing path");
-      this.pathService.getPathGeoJsonByIndex(this.gameState.pathIndex).subscribe(
-        (path) => {
-          this.edgeLayer.addData(path);
-        }
-      );
-    } else {
-      // this.addLocationToMap(startingLocation);
+    if (!this.gameState || this.gameState.pathIndex < 0) {
       this.addMarkerForLocation(startingLocation);
     }
 
@@ -110,44 +105,47 @@ export class RollingMapComponent {
 
   }
 
+  /**
+   * Draw all the cached paths up to our current location along with those locations.
+   * History paths are a different color from the current path.
+   */
   private updatePathsOnMap() {
-    console.log("State change to path index " + this.gameState.pathIndex);
-    if (this.gameState.pathIndex < 0) return;
-    for (let i = 0; i <= this.gameState.pathIndex; i++) {
-      console.log("ngOnChange: loading path for index " + i);
-      /* TODO: Should be able to cache these. */
-      this.pathService.getPathGeoJsonByIndex(i).subscribe(
-        (path) => {
-          let pathColor = this.blueLine;
-
-          /* Adjust color of last path added. */
-          if (i == this.gameState.pathIndex) {
-            pathColor = this.greenLine;
-          }
-
-          let styledPath = L.geoJSON(path.features, {
-            style: pathColor
-          });
-
-          styledPath.addTo(this.map);
-
-          /* Adjust map zoom/center to fit the last path added. */
-          if (i == this.gameState.pathIndex) {
-            this.map.fitBounds(styledPath.getBounds().pad(.2));
-          }
-        }
-      );
+    if (this.gameState.pathIndex < 0) {
+      console.log("Outing has not yet begun rolling");
+      return;
     }
+
+    const addCurrentPathToMap = tap((path: Path) => {
+        let styledPath = L.geoJSON(path.features, {
+          style: this.greenLine
+        });
+        styledPath.addTo(this.map);
+        /* Adjust map zoom/center to fit the last path added. */
+        this.map.fitBounds(styledPath.getBounds().pad(.2));
+      }
+    );
+
+    console.log("State change to path index " + this.gameState.pathIndex);
+
+    /* Because we start at zero, we have to run for one more than the current index. */
+    range(0, this.gameState.pathIndex+1)
+      .map((pathIndex: number): Path => this.pathService.getPathGeoJsonByIndex(pathIndex))
+      .do(
+        /* Adds history line to the map. */
+        (path: Path) => {
+          L.geoJSON(
+            path.features, {
+              style: this.blueLine,
+            }
+          ).addTo(this.map)
+        }
+      ).last().pipe(addCurrentPathToMap)
+      .subscribe();
 
     /* Add Locations to the Map. */
-    let locationList: Location[] = this.locationService
-      .getVisibleLocations(this.gameState.pathIndex);
-
-    for (let locationIndex in locationList) {
-      let location = locationList[locationIndex];
-      // this.addLocationToMap(location);
-      this.addMarkerForLocation(location);
-    }
+    from(this.locationService.getVisibleLocations(this.gameState.pathIndex))
+      .do(location => this.addMarkerForLocation(location))
+      .subscribe();
 
   }
 
@@ -207,4 +205,5 @@ export class RollingMapComponent {
   public signalArrival() {
     this.guideEventService.sendArrival();
   }
+
 }
