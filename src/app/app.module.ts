@@ -7,6 +7,8 @@ import {MyApp} from "./app.component";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
 
+import {AnswerPage} from "../pages/answer/answer-page";
+import {AnswerPageModule} from "../pages/answer/answer-page.module";
 import {AnswerSummaryService} from '../providers/answer-summary/answer-summary.service';
 import {AppStateService} from '../providers/app-state/app-state.service';
 import {BadgesPage} from "../pages/badges/badges";
@@ -34,6 +36,7 @@ import {TeamPageModule} from "../pages/team/team-page.module";
     HomePage,
   ],
   imports: [
+    AnswerPageModule,
     BadgesPageModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -48,6 +51,7 @@ import {TeamPageModule} from "../pages/team/team-page.module";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    AnswerPage,
     BadgesPage,
     HomePage,
     InvitePage,
