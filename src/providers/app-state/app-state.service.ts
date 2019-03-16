@@ -2,7 +2,6 @@ import {App, NavController} from "ionic-angular";
 import {AppState} from "./app-state";
 import {Injectable} from "@angular/core";
 import {
-  ConfirmationListener,
   ConfirmationState,
   InviteService,
   OutingService,
@@ -23,7 +22,7 @@ import {InvitePage} from "../../pages/invite/invite";
  * uses the REST end-point that returns Invitation State for a given session.
  */
 @Injectable()
-export class AppStateService implements ConfirmationListener {
+export class AppStateService {
 
   private nav: NavController;
 
@@ -34,14 +33,18 @@ export class AppStateService implements ConfirmationListener {
     private outingService: OutingService,
   ) {
     /** Add ourselves to the list of profile listeners. */
-    profileConfirmationService.listeners.push(this);
+    profileConfirmationService.confirmationState$.subscribe(
+      (confirmationState) => {
+        this.respondToConfirmationStateChange(confirmationState);
+      }
+    );
   }
 
   /**
    * Listens for a confirmation event and when the right event occurs,
    * evaluates which is the next page to present.
    */
-  public canWeSwitch(confirmationState: ConfirmationState) {
+  public respondToConfirmationStateChange(confirmationState: ConfirmationState) {
     if (confirmationState.authenticated && confirmationState.confirmed) {
       this.checkInviteIsAccepted()
         .then()
