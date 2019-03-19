@@ -2,13 +2,13 @@
 <div class="outing-summary">
   <div class="section-heading">Outing</div>
   <div class="course-name">
-    <a href="https://www.clueride.com/{{outing.course.url}}">{{outing.course.name}}</a>
+    <a href="{{outing.courseUrl}}">{{outing.courseName}}</a>
   </div>
   <div class="date">
-    Date: {{outing.date}}
+    Date: {{outing.scheduledTime | date}}
   </div>
   <div class="time">
-    Time: {{outing.time}}
+    Time: {{outing.scheduledTime | date: 'shortTime'}}
   </div>
   <div>
     <a (click)="viewDetails()">View Outing Details</a>
