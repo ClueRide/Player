@@ -1,6 +1,6 @@
 import {
+  AttractionService,
   CourseService,
-  LocationService,
   OutingService,
   OutingView,
   PathService,
@@ -37,7 +37,7 @@ export class LoadStateService {
     private outingService: OutingService,
     private courseService: CourseService,
     private gameStateService: GameStateService,
-    private locationService: LocationService,
+    private attractionService: AttractionService,
     private pathService: PathService,
     private serverEventsService: ServerEventsService,
     private puzzleService: PuzzleService,
@@ -93,10 +93,10 @@ export class LoadStateService {
   }
 
   private loadLocationData() {
-    this.locationService.loadSessionLocations()
+    this.attractionService.loadSessionAttractions()
       .takeUntil(this.loadStateObservable)
       .subscribe(
-      (response) => {
+      () => {
         this.loadPuzzleData();
       }
     );
@@ -107,7 +107,7 @@ export class LoadStateService {
     this.puzzleService.loadSessionPuzzles()
       .takeUntil(this.loadStateObservable)
       .subscribe(
-      (response) => {
+      () => {
         this.loadGameState();
       }
     );
@@ -119,16 +119,19 @@ export class LoadStateService {
     this.gameStateService.requestGameState()
       .takeUntil(this.loadStateObservable)
       .subscribe(
-      (response) => {
+      () => {
         /* Signal we're done. */
-        this.loadStateSubject.next(true);
+        console.log("Completed loading Course, Location, Game State and Puzzles");
         this.allCachedUp = true;
+
         /* Turns on SSE against our session's Outing ID. */
         // TODO: When does this turn off? Application life-cycle?
         this.serverEventsService.initializeSubscriptions(
           this.outing.id
         );
-        console.log("Completed loading Course, Location, Game State and Puzzles");
+
+        /* Let rest of world know. */
+        this.loadStateSubject.next(true);
       }
     );
   }

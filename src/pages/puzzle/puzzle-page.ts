@@ -1,17 +1,15 @@
-import {AnswerKey} from "front-end-common";
+import {AnswerKey, Puzzle, PuzzleService} from "front-end-common";
 import {AnswerPage} from "../answer/answer-page";
 import {AnswerSummaryService} from "../../providers/answer-summary/answer-summary.service";
 import {Component} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
-import {LocationService, Puzzle, PuzzleService} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 
 /**
- * Generated class for the PuzzlePage page.
+ * Presents the current puzzle to the player.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * The current puzzle is taken from the Game State Service.
  */
 
 @IonicPage()
@@ -21,43 +19,35 @@ import {Title} from "@angular/platform-browser";
 })
 export class PuzzlePage {
 
-  private puzzles: Puzzle[];
   puzzle: Puzzle = new Puzzle();
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     private guideEventService: GuideEventService,
     private puzzleService: PuzzleService,
     private answerSummaryService: AnswerSummaryService,
-    private locationService: LocationService,
     public titleService: Title,
   ) {
-
+    console.log("Hello Puzzle Page");
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PuzzlePage');
-
-    let locationId = this.locationService.getCurrentLocationId();
-    this.puzzles = this.puzzleService.getPuzzlesPerLocationId(locationId);
-    if (this.puzzles && this.puzzles.length > 0) {
-      this.puzzle = this.puzzles[0];
-    }
   }
 
   ionViewDidEnter() {
     console.log("PuzzlePage.ionViewDidEnter");
     this.titleService.setTitle("Puzzle");
+    this.puzzle = this.puzzleService.getPuzzle(
+      this.navParams.get('id')
+    );
   }
 
-  public isGuide(): boolean {
-    return this.guideEventService.isCurrentMemberGuide();
-  }
-
-  signalPuzzleSolved() {
-    this.guideEventService.sendDeparture();
-  }
-
+  /**
+   * Responds to selection of an answer by the player.
+   * @param choice
+   */
   selectAsAnswer(choice: string) {
     this.answerSummaryService.postAnswer(this.puzzle.id, AnswerKey[choice]).subscribe(
       (answerSummary) => {
@@ -68,6 +58,18 @@ export class PuzzlePage {
         });
       }
     );
+  }
+
+  // TODO: PLAY-50
+  /** Check to see if we can provide Guide components. */
+  public isGuide(): boolean {
+    return this.guideEventService.isCurrentMemberGuide();
+  }
+
+  // TODO: PLAY-50
+  /** Guide is able to indicate that we're ready for the next Attraction. */
+  signalPuzzleSolved() {
+    this.guideEventService.sendDeparture();
   }
 
 }

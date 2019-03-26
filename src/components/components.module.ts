@@ -8,7 +8,6 @@ import {InviteListComponent} from './invite-list/invite-list';
 import {OutingSummaryComponent} from "./outing-summary/outing-summary";
 import {PinnedMapComponent} from './pinned-map/pinned-map';
 import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
-import {RollingMapComponent} from './rolling-map/rolling-map';
 
 @NgModule({
 	declarations: [
@@ -18,7 +17,6 @@ import {RollingMapComponent} from './rolling-map/rolling-map';
     InviteListComponent,
     PinnedMapComponent,
     ProfileSummaryComponent,
-    RollingMapComponent,
   ],
 	imports: [
     IonicPageModule,
@@ -31,7 +29,6 @@ import {RollingMapComponent} from './rolling-map/rolling-map';
     InviteListComponent,
     PinnedMapComponent,
     ProfileSummaryComponent,
-    RollingMapComponent,
   ]
 })
 

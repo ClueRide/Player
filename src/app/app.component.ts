@@ -1,13 +1,11 @@
 import {AppState} from "../providers/app-state/app-state";
 import {AppStateService} from "../providers/app-state/app-state.service";
 import Auth0Cordova from "@auth0/cordova";
-import {AuthService, PlatformStateService} from "front-end-common";
+import {AuthService, AuthState, PlatformStateService} from "front-end-common";
 import {Component, ViewChild} from "@angular/core";
 import {Nav, Platform} from "ionic-angular";
-import {Observable} from "rxjs/Observable";
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
-import {Subject} from "rxjs/Subject";
 
 import {BadgesPage} from "../pages/badges/badges";
 import {HomePage} from "../pages/home/home";
@@ -35,16 +33,6 @@ export class MyApp {
     public platformService: PlatformStateService,
   ) {
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Outing', component: OutingPage },
-      { title: 'Badges', component: BadgesPage },
-      { title: 'Team', component: TeamPage },
-      { title: 'Play Game', component: RollingPage },
-    ];
-
   }
 
   initializeApp() {
@@ -62,8 +50,21 @@ export class MyApp {
         Auth0Cordova.onRedirectUri(url);
       }
     });
+
+    this.pages = [
+      { title: 'Home', component: HomePage },
+      { title: 'Outing', component: OutingPage },
+      { title: 'Badges', component: BadgesPage },
+      { title: 'Team', component: TeamPage },
+      { title: 'Play Game', component: RollingPage },
+    ];
+
   }
 
+  /**
+   * Menu calls into this to switch to a new page.
+   * @param page the menu element the user chose.
+   */
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -75,44 +76,38 @@ export class MyApp {
     /* URL Scheme determines the URL where we respond to callbacks from Identity Provider. */
     this.authService.setUrlScheme("com.clueride.player");
 
-    this.checkDeviceRegistered().subscribe(
-      (result) => {
-        /* Nothing to be done; we're now on the correct initial page. */
-      },
-      () => {
-        /* Problem. */
-        console.log("Problem registering the application.");
-      }
-    );
-  }
+    let pageReadyPromise: Promise<void>;
 
-  /** Bring up Registration page if not yet registered; otherwise, wait for fresh token. */
-  private checkDeviceRegistered(): Observable<number> {
-    let registeredStateSubject: Subject<number> = new Subject;
-
-    this.authService.checkRegistrationRequired().then(
-      (needsRegistration) => {
-        let pageReadyPromise: Promise<void>;
-
-        if (needsRegistration) {
-          pageReadyPromise = this.appStateService.prepareAndShowPage(AppState.UNREGISTERED);
-        } else {
-          pageReadyPromise = this.appStateService.checkInviteIsAccepted();
-        }
-
-        pageReadyPromise.then(
-          () => {
-            if (!this.platformService.runningLocal()) {
-              /* Splash screen is native only. */
-              this.splashScreen.hide();
-            }
-            registeredStateSubject.next(1);
+    this.authService.getRegistrationState()
+      .take(1)
+      .subscribe(
+        (authState: AuthState) => {
+          switch (authState) {
+            case AuthState.UNREGISTERED:
+              pageReadyPromise = this.appStateService.prepareAndShowPage(AppState.UNREGISTERED);
+              break;
+            case AuthState.REGISTERED:
+              console.log("ngOnInit(): we're registered");
+              pageReadyPromise = this.appStateService.checkInviteIsAccepted();
+              break;
+            default:
+              console.log("Unexpected Registration State: " + AuthState[authState]);
+              break;
           }
-        );
-      }
-    );
 
-    return registeredStateSubject.asObservable();
+          pageReadyPromise.then(
+            () => {
+              console.log("We think we have a promise fulfilled");
+              if (!this.platformService.runningLocal()) {
+                /* Splash screen is native only. */
+                this.splashScreen.hide();
+              }
+            }
+          );
+
+        }
+      );
+
   }
 
 }
