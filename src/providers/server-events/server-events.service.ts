@@ -1,10 +1,11 @@
 import {AnswerSummary} from "../answer-summary/answer-summary";
 import {EventSourcePolyfill, OnMessageEvent} from "ng-event-source";
 import {fromEvent} from "rxjs/observable/fromEvent";
-import {GameStateService} from "../game-state/game-state.service";
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
+import {Subject} from "rxjs/Subject";
 import {TokenService} from "front-end-common";
+import {tap} from "rxjs/operators/tap";
 
 const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
 
@@ -16,11 +17,12 @@ export class ServerEventsService {
 
   private eventSource: EventSourcePolyfill;
   private answerSummary$: Observable<OnMessageEvent>;
+  private gameState$: Subject<OnMessageEvent>;
 
   constructor(
     private tokenService: TokenService,
-    private gameStateService: GameStateService
   ) {
+    this.gameState$ = new Subject<OnMessageEvent>();
   }
 
   /**
@@ -48,7 +50,7 @@ export class ServerEventsService {
       this.eventSource.onmessage = (
         (messageEvent: OnMessageEvent) => {
           console.log("SSE Message: " + JSON.stringify(messageEvent.data));
-          this.gameStateService.updateFromEvent(messageEvent.data);
+          this.gameState$.next(messageEvent);
         }
       );
 
@@ -64,7 +66,14 @@ export class ServerEventsService {
         }
       );
 
+      // TODO: I haven't yet gotten this to work; currently passing the message from `.onMessage`.
       /* Custom event definitions. */
+      fromEvent(
+        this.eventSource,
+        'game-state'
+      ).pipe(tap(() => console.log("Got Game State Event")))
+        .subscribe(this.gameState$.next);
+
       this.answerSummary$ = fromEvent(
         this.eventSource,
         'answer-summary'
@@ -79,6 +88,15 @@ export class ServerEventsService {
    */
   public getAnswerSummaryObservable(): Observable<AnswerSummary> {
     return this.answerSummary$.map(
+      event => JSON.parse(event.data)
+    );
+  }
+
+  /**
+   * Observable that streams Game State events.
+   */
+  public getGameStateObservable(): Observable<any> {
+    return this.gameState$.map(
       event => JSON.parse(event.data)
     );
   }
