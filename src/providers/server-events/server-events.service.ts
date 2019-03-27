@@ -88,7 +88,9 @@ export class ServerEventsService {
    */
   public getAnswerSummaryObservable(): Observable<AnswerSummary> {
     return this.answerSummary$.map(
-      event => JSON.parse(event.data)
+      event => {
+        return JSON.parse(event.data).answerSummary;
+      }
     );
   }
 
