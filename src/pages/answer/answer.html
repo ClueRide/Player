@@ -16,17 +16,16 @@
 
     <!-- Answer Section -->
     <ion-buttons>
-      <div class="answer"
+      <div class="answer-container"
            *ngFor="let answer of puzzle.answers"
+           [class.correctAnswer]="isCorrectAnswer(answer.key)"
+           [class.incorrectAnswer]="!isCorrectAnswer(answer.key)"
       >
-        <div style="height: 75px">
+        <div class="answer">
           <span class="answerCount">
             {{answerSummary.answerMap[answer.key]}}
           </span>
-          <span class="answerText"
-                [class.correctAnswer]="isCorrectAnswer(answer.key)"
-                [class.incorrectAnswer]="!isCorrectAnswer(answer.key)"
-          >
+          <span class="answerText">
             {{answer.answer}}
           </span>
         </div>
