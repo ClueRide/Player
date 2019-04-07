@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ProfileService} from "front-end-common";
+import {Component, Input} from '@angular/core';
+import {Member} from "../../../../front-end-common/src/providers/profile/member";
 
 /**
  * Generated class for the ProfileSummaryComponent component.
@@ -13,9 +13,11 @@ import {ProfileService} from "front-end-common";
 })
 export class ProfileSummaryComponent {
 
+  @Input() profile: Member;
+
   constructor(
-    public profile: ProfileService
   ) {
+
   }
 
 }
