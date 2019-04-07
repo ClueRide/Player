@@ -2,12 +2,15 @@ import {Component} from "@angular/core";
 import {AuthService, ProfileService, PlatformStateService,} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 import {LoadStateService} from "../../providers/load-state/load-state.service";
+import {Member} from "../../../../front-end-common/src/providers/profile/member";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  member: Member;
 
   constructor(
     /* Used on the HTML page: */
@@ -20,7 +23,12 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.profileService.loadMemberProfile();
+    this.profileService.loadMemberProfile()
+      .subscribe(
+        (member) => {
+          this.member = member;
+        }
+      );
     this.loadStateService.loadOutingData();
   }
 
