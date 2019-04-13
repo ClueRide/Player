@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from "ionic-angular";
-import {GameStateService} from "../../providers/game-state/game-state.service";
+import {PageRoutingService} from "../../providers/page-routing/page-routing.service";
 
 /**
  * Generated class for the BeginGameComponent component.
@@ -16,13 +16,14 @@ export class BeginGameComponent {
 
   constructor(
     public navCtrl: NavController,
-    private gameStateService: GameStateService,
+    private pageRouteService: PageRoutingService,
   ) {
   }
 
   public beginGame() {
+    // TODO: PLAY-68 Begin/Resume
     console.log('Beginning Game');
-    this.gameStateService.beginGame();
+    this.pageRouteService.beginGame();
   }
 
 }

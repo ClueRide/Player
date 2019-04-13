@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {GameState} from "../../providers/game-state/game-state";
+import {GameStateService} from "../../providers/game-state/game-state.service";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 import {IonicPage, NavController, NavParams} from "ionic-angular";
 import * as L from "leaflet";
@@ -41,13 +42,12 @@ export class RollingPage {
     private attractionService: AttractionService,
     public outingService: OutingService,
     public titleService: Title,
+    private gameStateService: GameStateService,
     private guideEventService: GuideEventService,
     public navCtrl: NavController,
-    public navParams: NavParams,
     private pathService: PathService,
   ) {
     console.log("Hello RollingPage");
-    this.gameState = navParams.get('gameState');
   }
 
   ngAfterViewInit() {
@@ -61,7 +61,13 @@ export class RollingPage {
 
     this.map = L.map('rolling-map');
     this.prepareRollingMap();
-    this.updatePathsOnMap(this.gameState);
+    this.gameStateService.requestGameState()
+      .subscribe(
+        (gameState) => {
+          this.gameState = gameState
+          this.updatePathsOnMap(this.gameState);
+        }
+      );
   }
 
   ionViewDidEnter() {
