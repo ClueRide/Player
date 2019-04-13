@@ -7,6 +7,7 @@ import {Nav, Platform} from "ionic-angular";
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
 
+import {AboutPage} from "../pages/about/about";
 import {BadgesPage} from "../pages/badges/badges";
 import {HomePage} from "../pages/home/home";
 import {OutingPage} from "../pages/outing/outing";
@@ -57,6 +58,7 @@ export class MyApp {
       { title: 'Badges', component: BadgesPage },
       { title: 'Team', component: TeamPage },
       { title: 'Play Game', component: RollingPage },
+      { title: 'About', component: AboutPage },
     ];
 
   }
@@ -68,6 +70,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
+    // TODO: PLAY-58 - Rolling Page accepts path param
     this.nav.setRoot(page.component);
   }
 

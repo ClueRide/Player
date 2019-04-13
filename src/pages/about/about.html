@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>About</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="banner-image">
+    <img src="https://clueride.com/wp-content/uploads/2018/09/clueRideBanner-350x80-withBackground.png"
+         alt="Clue Ride - Atlanta's Bicycle Scavenger Hunt" />
+  </div>
+
+  <div>
+    Visit the <a href="https://clueride.com/">Clue Ride site</a> to learn more.
+  </div>
+
+  <div *ngIf="!platform.runningLocal() && about">
+    <p>Version: {{about.version}}</p>
+  </div>
+
+  <div *ngIf="platform.runningLocal()">
+    <p>Running within Browser - version info not available</p>
+  </div>
+
+</ion-content>
