@@ -17,12 +17,12 @@ export class ServerEventsService {
 
   private eventSource: EventSourcePolyfill;
   private answerSummary$: Observable<OnMessageEvent>;
-  private gameState$: Subject<OnMessageEvent>;
+  private gameStateEvent$: Subject<OnMessageEvent>;
 
   constructor(
     private tokenService: TokenService,
   ) {
-    this.gameState$ = new Subject<OnMessageEvent>();
+    this.gameStateEvent$ = new Subject<OnMessageEvent>();
   }
 
   /**
@@ -50,7 +50,7 @@ export class ServerEventsService {
       this.eventSource.onmessage = (
         (messageEvent: OnMessageEvent) => {
           console.log("SSE Message: " + JSON.stringify(messageEvent.data));
-          this.gameState$.next(messageEvent);
+          this.gameStateEvent$.next(messageEvent);
         }
       );
 
@@ -72,7 +72,7 @@ export class ServerEventsService {
         this.eventSource,
         'game-state'
       ).pipe(tap(() => console.log("Got Game State Event")))
-        .subscribe(this.gameState$.next);
+        .subscribe(this.gameStateEvent$.next);
 
       this.answerSummary$ = fromEvent(
         this.eventSource,
@@ -97,8 +97,8 @@ export class ServerEventsService {
   /**
    * Observable that streams Game State events.
    */
-  public getGameStateObservable(): Observable<any> {
-    return this.gameState$.map(
+  public getGameStateEventObservable(): Observable<any> {
+    return this.gameStateEvent$.map(
       event => JSON.parse(event.data)
     );
   }

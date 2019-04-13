@@ -29,6 +29,7 @@ import {AppStateService} from '../providers/app-state/app-state.service';
 import {GameStateService} from "../providers/game-state/game-state.service";
 import {GuideEventService} from '../providers/guide-event-service/guide-event-service';
 import {LoadStateService} from '../providers/load-state/load-state.service';
+import {PageRoutingService} from '../providers/page-routing/page-routing.service';
 import {ServerEventsService} from "../providers/server-events/server-events.service";
 import {MyApp} from "./app.component";
 
@@ -71,6 +72,7 @@ import {MyApp} from "./app.component";
     GameStateService,
     GuideEventService,
     LoadStateService,
+    PageRoutingService,
     ServerEventsService,
     StatusBar,
     SplashScreen,
