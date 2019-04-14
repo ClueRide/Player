@@ -8,6 +8,7 @@ import {InviteListComponent} from './invite-list/invite-list';
 import {OutingSummaryComponent} from "./outing-summary/outing-summary";
 import {PinnedMapComponent} from './pinned-map/pinned-map';
 import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
+import {TeamMemberChipComponent} from './team-member-chip/team-member-chip';
 
 @NgModule({
 	declarations: [
@@ -17,6 +18,7 @@ import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
     InviteListComponent,
     PinnedMapComponent,
     ProfileSummaryComponent,
+    TeamMemberChipComponent,
   ],
 	imports: [
     IonicPageModule,
@@ -29,6 +31,7 @@ import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
     InviteListComponent,
     PinnedMapComponent,
     ProfileSummaryComponent,
+    TeamMemberChipComponent,
   ]
 })
 
