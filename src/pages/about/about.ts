@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AppVersion} from "@ionic-native/app-version";
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {PlatformStateService} from "front-end-common";
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {PlatformStateService, ProfileService} from "front-end-common";
 
 /**
  * Presents version information when running natively, and links
@@ -14,19 +14,19 @@ import {PlatformStateService} from "front-end-common";
 })
 export class AboutPage {
 
-  about: {
-    version: string,
-  };
+  /* Public members. */
+  readonly about: {version: string} = {version: ''};
+  /* Values here are replaced at build time by cordova's `before_prepare` script. */
+  readonly buildDate: string = 'BUILD_DATE';
+  readonly gitSha: string = 'GIT_VERSION_STRING';
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private readonly appVersion: AppVersion,
     public readonly platform: PlatformStateService,
+    public readonly memberService: ProfileService,
   ) {
-    this.about = {
-      version: ''
-    }
   }
 
   ngOnInit(): void {

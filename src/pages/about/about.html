@@ -16,16 +16,48 @@
          alt="Clue Ride - Atlanta's Bicycle Scavenger Hunt" />
   </div>
 
-  <div>
-    Visit the <a href="https://clueride.com/">Clue Ride site</a> to learn more.
-  </div>
+  <ion-card>
+    <ion-card-header>About Clue Ride</ion-card-header>
+    <ion-card-content>
+      <div>
+        Clue Ride is sugar-free community-building -- disguised as a scavenger-hunt game.
+        <p>Visit the <a href="https://clueride.com/">Clue Ride site</a> to learn more about how you can participate.
+        <p>And Thank You for being a part of this community.
+      </div>
+    </ion-card-content>
+  </ion-card>
 
-  <div *ngIf="!platform.runningLocal() && about">
-    <p>Version: {{about.version}}</p>
-  </div>
+  <ion-card>
+    <ion-card-header>About You</ion-card-header>
+    <ion-card-content>
+      Yes, this really is all about you.<br>
+      <profile-summary [profile]="memberService.member"></profile-summary>
+    </ion-card-content>
+  </ion-card>
 
-  <div *ngIf="platform.runningLocal()">
-    <p>Running within Browser - version info not available</p>
-  </div>
+  <ion-card>
+    <ion-card-header>About this App</ion-card-header>
+    <ion-card-content>
+      <div>
+        <p>Ionic v3 & Angular 5 using Jet Brain's IntelliJ IDEA
+      </div>
+
+      <div *ngIf="!platform.runningLocal() && about">
+        <p>Version: {{about.version}}</p>
+      </div>
+
+      <div *ngIf="platform.runningLocal()">
+        <p>Running within Browser - version info not available</p>
+      </div>
+
+      <div>
+        <p>Git SHA: {{gitSha}}</p>
+      </div>
+
+      <div>
+        <p>Build Date: {{buildDate}}
+      </div>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
