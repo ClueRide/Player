@@ -17,9 +17,19 @@
 
 
 <ion-content padding>
-  <li *ngFor="let member of team.members">
-    {{member.displayName}}
-  </li>
+  <ion-card>
+
+    <ion-card-header>Team Members for this Outing</ion-card-header>
+    <ion-card-content>
+
+      <ion-list *ngFor="let member of team.members">
+        <ion-item>
+          <team-member-chip [member]="member"></team-member-chip>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
 
   <div *ngIf="isGuide()">
     <ion-fab left bottom>
