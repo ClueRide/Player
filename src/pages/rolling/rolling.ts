@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
-import {GameState} from "../../providers/game-state/game-state";
-import {GameStateService} from "../../providers/game-state/game-state.service";
-import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
-import {IonicPage, NavController, NavParams} from "ionic-angular";
-import * as L from "leaflet";
-import {Attraction, AttractionService, OutingService, OutingView, Path, PathService} from "front-end-common";
 import {Title} from "@angular/platform-browser";
+import {Attraction, AttractionService, OutingService, OutingView, Path, PathService} from "front-end-common";
+import {IonicPage, NavController} from "ionic-angular";
+import * as L from "leaflet";
 import {from} from "rxjs/observable/from";
 import {range} from "rxjs/observable/range";
 import {tap} from "rxjs/operators/tap";
+import {GameState} from "../../providers/game-state/game-state";
+import {GameStateService} from "../../providers/game-state/game-state.service";
+import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 
 const GREEN_LINE = {
   color: "#00AA00",

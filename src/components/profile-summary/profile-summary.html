@@ -1,13 +1,12 @@
-<div *ngIf="profile">
-  <div class="section-heading">Registered as</div>
-  <div class="profile-summary">
-    <div class="user-image"
-         *ngIf="profile.imageUrl">
-      <img [src]="profile.imageUrl">
-    </div>
-    <div class="name">
-      {{profile.displayName}}<br>
-      {{profile.emailAddress}}
+  <div *ngIf="profile">
+    <div class="profile-summary">
+      <ion-avatar class="user-image"
+                  *ngIf="profile.imageUrl">
+        <img [src]="profile.imageUrl">
+      </ion-avatar>
+      <div class="name">
+        {{profile.displayName}}<br>
+        <em>{{profile.emailAddress}}</em>
+      </div>
     </div>
   </div>
-</div>
