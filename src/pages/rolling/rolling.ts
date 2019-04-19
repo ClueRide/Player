@@ -9,17 +9,18 @@ import {tap} from "rxjs/operators/tap";
 import {GameState} from "../../providers/game-state/game-state";
 import {GameStateService} from "../../providers/game-state/game-state.service";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
+import {MarkerService} from "../../providers/marker-service/marker-service";
 
 const GREEN_LINE = {
-  color: "#00AA00",
-  weight: 5,
+  color: "#00FF00",
+  weight: 6,
   opacity: .75
 };
 
 const BLUE_LINE = {
   color: "#4040FF",
-  weight: 5,
-  opacity: .65
+  weight: 4,
+  opacity: .55
 };
 
 /**
@@ -34,18 +35,20 @@ export class RollingPage {
   map: any;
   edgeLayer: any;
 
+  /* Public members. */
   outing: OutingView;
   gameState: GameState;
   zoomLevel: number = 14;
 
   constructor(
     private attractionService: AttractionService,
-    public outingService: OutingService,
-    public titleService: Title,
+    private outingService: OutingService,
+    private titleService: Title,
     private gameStateService: GameStateService,
     private guideEventService: GuideEventService,
-    public navCtrl: NavController,
+    private navCtrl: NavController,
     private pathService: PathService,
+    private markerService: MarkerService,
   ) {
     console.log("Hello RollingPage");
   }
@@ -64,7 +67,7 @@ export class RollingPage {
     this.gameStateService.requestGameState()
       .subscribe(
         (gameState) => {
-          this.gameState = gameState
+          this.gameState = gameState;
           this.updatePathsOnMap(this.gameState);
         }
       );
@@ -139,12 +142,20 @@ export class RollingPage {
 
   }
 
+  private selectMarkerIcon(attraction: Attraction): L.AwesomeMarker.Icon {
+    if (attraction.isLast) return this.markerService.nextAttractionIcon;
+    if (attraction.isCurrent) return this.markerService.currentAttractionIcon;
+    return this.markerService.defaultAttractionIcon;
+  }
+
   /**
    * Places a Marker that carries the Attraction ID and the
    * attraction's name.
    * @param attraction to be placed on map.
    */
-  private addMarkerForAttraction(attraction: Attraction) {
+  private addMarkerForAttraction(
+    attraction: Attraction
+  ) {
     /* Adding the right color and icon goes here. */
     let marker: L.marker = L.marker(
       L.latLng(attraction.latLon),
@@ -152,14 +163,17 @@ export class RollingPage {
         id: attraction.id,
         title: attraction.name,
         navCtrl: this.navCtrl,
+        icon: this.selectMarkerIcon(attraction),
       }
     );
 
+    /* What to do when user clicks on the attraction. */
     marker.on('click', RollingPage.onAttractionMarker);
 
     marker.addTo(this.edgeLayer);
   }
 
+  /* Response to clicks on the attraction's marker: show the attraction's page. */
   private static onAttractionMarker(e) {
     let details = e.target.options;
     details.navCtrl.push("LocationPage", {'id': details.id });
