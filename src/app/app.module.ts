@@ -16,6 +16,7 @@ import {BadgesPageModule} from "../pages/badges/badges.module";
 import {HomePage} from "../pages/home/home";
 import {InvitePage} from "../pages/invite/invite";
 import {InvitePageModule} from "../pages/invite/invite.module";
+import {MarkerService} from '../providers/marker-service/marker-service';
 import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
 import {PuzzlePage} from "../pages/puzzle/puzzle-page";
@@ -72,6 +73,7 @@ import {MyApp} from "./app.component";
     GameStateService,
     GuideEventService,
     LoadStateService,
+    MarkerService,
     PageRoutingService,
     ServerEventsService,
     StatusBar,
