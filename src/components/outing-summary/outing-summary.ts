@@ -1,5 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {NavController} from "ionic-angular";
+import {OutingPage} from "../../pages/outing/outing";
 import {OutingService, OutingView} from "front-end-common";
 import {Subscription} from "rxjs/Subscription";
 
@@ -36,7 +37,7 @@ implements AfterViewInit {
   }
 
   public viewDetails() {
-    this.navCtrl.push("OutingPage");
+    this.navCtrl.push(OutingPage);
   }
 
   ngOnDestroy() {

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Badge, BadgeService} from "front-end-common";
+import {BadgesPage} from "../../pages/badges/badges";
 import {NavController} from "ionic-angular";
 
 /**
@@ -31,7 +32,7 @@ export class BadgeSummaryComponent {
   }
 
   public viewDetails() {
-    this.navCtrl.push("BadgesPage");
+    this.navCtrl.push(BadgesPage);
   }
 
 }

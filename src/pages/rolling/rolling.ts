@@ -10,6 +10,7 @@ import {GameState} from "../../providers/game-state/game-state";
 import {GameStateService} from "../../providers/game-state/game-state.service";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 import {MarkerService} from "../../providers/marker-service/marker-service";
+import {LocationPage} from "../location/location";
 
 const GREEN_LINE = {
   color: "#00FF00",
@@ -176,7 +177,7 @@ export class RollingPage {
   /* Response to clicks on the attraction's marker: show the attraction's page. */
   private static onAttractionMarker(e) {
     let details = e.target.options;
-    details.navCtrl.push("LocationPage", {'id': details.id });
+    details.navCtrl.push(LocationPage, {'id': details.id });
   }
 
   public isGuide(): boolean {

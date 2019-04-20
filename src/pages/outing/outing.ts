@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController} from 'ionic-angular';
 import {OutingService, OutingView} from "front-end-common";
+import {TeamPage} from "../team/team-page";
 import {Title} from "@angular/platform-browser";
 
 /**
@@ -39,7 +40,7 @@ export class OutingPage {
   }
 
   public showTeam() {
-    this.navCtrl.push("TeamPage");
+    this.navCtrl.push(TeamPage);
   }
 
 }
