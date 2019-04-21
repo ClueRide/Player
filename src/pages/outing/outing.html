@@ -28,7 +28,8 @@
       Time: {{outing.scheduledTime | date:'shortTime'}}
     </span>
   </div>
-  <div class="section-button-right">
+  <div class="section-button-right"
+       *ngIf="false">
     <button ion-button (click)="addToCalendar()">Add to Calendar</button>
   </div>
 
@@ -39,7 +40,10 @@
     <a (click)="showTeam()">{{outing.teamName}}</a>
   </div>
 
-  <pinned-map class="map-content" [pin]='outing.startPin'></pinned-map>
+  <pinned-map class="map-content"
+              [startingLocationObservable]="startingAttractionSubject"
+              [pin]='outing.startPin'>
+  </pinned-map>
 
   <begin-game></begin-game>
 

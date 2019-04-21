@@ -1,24 +1,35 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {LatLon} from "../lat-lon";
 import * as L from "leaflet";
+import {Attraction} from "front-end-common";
+import {Observable} from "rxjs/Observable";
+import {Subscription} from "rxjs/Subscription";
+import {MarkerService} from "../../providers/marker-service/marker-service";
+import {NavController} from "ionic-angular";
 
 /**
- * Generated class for the PinnedMapComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
+ * Provides a simple map showing Attraction(s) provided via
+ * the 'startingLocationObservable'.
  */
 @Component({
   selector: 'pinned-map',
   templateUrl: 'pinned-map.html'
 })
-export class PinnedMapComponent {
+export class PinnedMapComponent implements OnInit, OnDestroy {
 
+  @Input() startingLocationObservable: Observable<Attraction>;
   @Input() pin: LatLon;
   map: any;
   zoomLevel = 14;
+  subscription: Subscription;
+  loading: boolean;
 
-  constructor() {
+  constructor(
+    private markerService: MarkerService,
+    private navCtrl: NavController,
+  ) {
+    this.subscription = new Subscription();
+    this.loading = true;
   }
 
   ngOnInit(): void {
@@ -32,8 +43,22 @@ export class PinnedMapComponent {
     this.map.setView(leafletPosition, this.zoomLevel);
 
     /* Specify the tile layer for the map and add the attribution. */
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
-    L.marker(leafletPosition).addTo(this.map);
+    let tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
+    tileLayer.on('tileload', () => this.loading = false);
+
+    /* Setup the starting Attraction. */
+    this.subscription.add(
+      this.startingLocationObservable
+        .subscribe(
+          (attraction: Attraction) => {
+            this.markerService.generateAttractionMarker(
+              attraction,
+              this.navCtrl
+            ).addTo(this.map);
+          }
+        )
+    );
+
   }
 
   /* Cleanup after ourselves. */
@@ -41,6 +66,8 @@ export class PinnedMapComponent {
     if (this.map) {
       this.map.remove();
     }
+
+    this.subscription.unsubscribe();
   }
 
 }
