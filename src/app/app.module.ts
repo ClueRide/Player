@@ -16,6 +16,8 @@ import {BadgesPageModule} from "../pages/badges/badges.module";
 import {HomePage} from "../pages/home/home";
 import {InvitePage} from "../pages/invite/invite";
 import {InvitePageModule} from "../pages/invite/invite.module";
+import {LocationPage} from "../pages/location/location";
+import {LocationPageModule} from "../pages/location/location.module";
 import {MarkerService} from '../providers/marker-service/marker-service';
 import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
@@ -47,6 +49,7 @@ import {MyApp} from "./app.component";
     IonicModule.forRoot(MyApp),
     ComponentsModule.forRoot(),
     InvitePageModule,
+    LocationPageModule,
     PuzzlePageModule,
     RollingPageModule,
     OutingPageModule,
@@ -61,6 +64,7 @@ import {MyApp} from "./app.component";
     BadgesPage,
     HomePage,
     InvitePage,
+    LocationPage,
     OutingPage,
     PuzzlePage,
     RollingPage,

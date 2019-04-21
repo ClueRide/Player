@@ -10,7 +10,6 @@ import {GameState} from "../../providers/game-state/game-state";
 import {GameStateService} from "../../providers/game-state/game-state.service";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 import {MarkerService} from "../../providers/marker-service/marker-service";
-import {LocationPage} from "../location/location";
 
 const GREEN_LINE = {
   color: "#00FF00",
@@ -143,41 +142,20 @@ export class RollingPage {
 
   }
 
-  private selectMarkerIcon(attraction: Attraction): L.AwesomeMarker.Icon {
-    if (attraction.isLast) return this.markerService.nextAttractionIcon;
-    if (attraction.isCurrent) return this.markerService.currentAttractionIcon;
-    return this.markerService.defaultAttractionIcon;
-  }
-
   /**
-   * Places a Marker that carries the Attraction ID and the
-   * attraction's name.
-   * @param attraction to be placed on map.
+   * Places a Marker that carries the Attraction ID and the attraction's name.
+   *
+   * @param attraction Attraction to be placed on map.
    */
   private addMarkerForAttraction(
     attraction: Attraction
   ) {
-    /* Adding the right color and icon goes here. */
-    let marker: L.marker = L.marker(
-      L.latLng(attraction.latLon),
-      {
-        id: attraction.id,
-        title: attraction.name,
-        navCtrl: this.navCtrl,
-        icon: this.selectMarkerIcon(attraction),
-      }
+    let marker = this.markerService.generateAttractionMarker(
+      attraction,
+      this.navCtrl
     );
 
-    /* What to do when user clicks on the attraction. */
-    marker.on('click', RollingPage.onAttractionMarker);
-
     marker.addTo(this.edgeLayer);
-  }
-
-  /* Response to clicks on the attraction's marker: show the attraction's page. */
-  private static onAttractionMarker(e) {
-    let details = e.target.options;
-    details.navCtrl.push(LocationPage, {'id': details.id });
   }
 
   public isGuide(): boolean {

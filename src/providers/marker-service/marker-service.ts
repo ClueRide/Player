@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import * as L from "leaflet";
 import "leaflet.awesome-markers/dist/leaflet.awesome-markers";
+import {LocationPage} from "../../pages/location/location";
+import {Attraction} from "front-end-common";
+import {NavController} from "ionic-angular";
 
 /**
  * This list of valid marker colors is taken from the leaflet.awesome-markers github README:
@@ -82,6 +85,57 @@ export class MarkerService {
         markerColor: markerColor
       }
     );
+  }
+
+  generateAttractionMarker(
+    attraction: Attraction,
+    navCtrl: NavController
+  ): L.marker {
+    /* Adding the right color and icon goes here. */
+    let marker: L.marker = L.marker(
+      L.latLng(attraction.latLon),
+      {
+        id: attraction.id,
+        title: attraction.name,
+        navCtrl: navCtrl,
+        icon: this.selectMarkerIcon(attraction),
+      }
+    );
+
+    /* What to do when user clicks on the attraction. */
+    MarkerService.setOnClickToLocationPage(marker);
+
+    return marker;
+  }
+
+  selectMarkerIcon(attraction: Attraction): L.AwesomeMarker.Icon {
+    if (attraction.isLast) return this.nextAttractionIcon;
+    if (attraction.isCurrent) return this.currentAttractionIcon;
+    return this.defaultAttractionIcon;
+  }
+
+  /**
+   * For the given marker, set the OnClick response to push the Location Page
+   * for the Attraction ID carried by the marker.
+   *
+   * Exception is thrown if the marker doesn't carry the `id` property.
+   *
+   * @param marker Leaflet marker with additional attribute for the attraction ID.
+   */
+  static setOnClickToLocationPage(marker: L.marker): void {
+    if (!marker.options.id) {
+      console.error("Marker without Attraction ID");
+      throw {
+        error: "setOnClickToLocationPage: marker doesn't have an attraction ID"
+      }
+    }
+    marker.on('click', MarkerService.onAttractionMarker);
+  }
+
+  /** Response to clicks on the attraction's marker: show the attraction's page. */
+  private static onAttractionMarker(e) {
+    let details = e.target.options;
+    details.navCtrl.push(LocationPage, {'id': details.id });
   }
 
 }
