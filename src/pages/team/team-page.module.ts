@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
-import {TeamPage} from './team-page';
 import {SummaryComponentsModule} from "../../components/components.module";
+import {TeamPage} from './team-page';
+import {MemberChipComponentModule} from "front-end-common";
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import {SummaryComponentsModule} from "../../components/components.module";
   imports: [
     IonicPageModule.forChild(TeamPage),
     SummaryComponentsModule,
+    MemberChipComponentModule,
   ],
 })
 export class TeamPageModule {}
