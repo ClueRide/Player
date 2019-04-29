@@ -24,7 +24,8 @@
 
       <ion-list *ngFor="let member of team.members">
         <ion-item>
-          <team-member-chip [member]="member"></team-member-chip>
+          <member-chip [member]="member">
+          </member-chip>
         </ion-item>
       </ion-list>
 
