@@ -5,10 +5,7 @@ import {Team, TeamService} from "front-end-common";
 import {GuideEventService} from "../../providers/guide-event-service/guide-event-service";
 
 /**
- * Generated class for the TeamPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Presents members of a Team.
  */
 
 @IonicPage()
