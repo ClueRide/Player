@@ -9,7 +9,25 @@
 <ion-content padding>
   <img [src]="attraction.featuredImage.url"
        *ngIf="attraction.featuredImage">
-  <div class="description-text">
-    {{attraction.description}}
-  </div>
+  <ion-card>
+    <ion-card-title>
+      {{attraction.name}}
+    </ion-card-title>
+    <ion-card-content>
+        {{attraction.description}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="attraction.mainLink">
+    <ion-card-title>
+      Links
+    </ion-card-title>
+    <ion-card-content>
+      <ion-label>Main Link</ion-label>
+      <a class="item" href="#" (click)="openLocLink(attraction.mainLink)">
+        {{attraction.mainLink.linkString}}
+      </a>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
