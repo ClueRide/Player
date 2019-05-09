@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Attraction, AttractionService, Image} from "front-end-common";
+import {Attraction, AttractionService, Image, LocLink} from "front-end-common";
 import {Title} from "@angular/platform-browser";
 import {LoadStateService} from "../../providers/load-state/load-state.service";
 
@@ -41,4 +41,13 @@ export class LocationPage {
     this.titleService.setTitle("Location");
   }
 
+  openLocLink(locLink: LocLink) {
+    /* TODO: Invoke the Badge API (SVR-51) here. */
+    window.open(
+      locLink.linkString,
+      '_system',
+      'location=yes'
+      );
+    return false;
+  }
 }
