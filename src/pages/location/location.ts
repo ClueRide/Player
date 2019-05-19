@@ -44,7 +44,7 @@ export class LocationPage {
   openLocLink(locLink: LocLink) {
     /* TODO: Invoke the Badge API (SVR-51) here. */
     window.open(
-      locLink.linkString,
+      locLink.link,
       '_system',
       'location=yes'
       );
