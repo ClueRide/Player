@@ -21,6 +21,8 @@ import {LocationPageModule} from "../pages/location/location.module";
 import {MarkerService} from '../providers/marker-service/marker-service';
 import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
+import {PrivacyPage} from "../pages/privacy/privacy";
+import {PrivacyPageModule} from "../pages/privacy/privacy.module";
 import {PuzzlePage} from "../pages/puzzle/puzzle-page";
 import {PuzzlePageModule} from "../pages/puzzle/puzzle-page.module";
 import {RollingPage} from "../pages/rolling/rolling";
@@ -51,6 +53,7 @@ import {MyApp} from "./app.component";
     InvitePageModule,
     LocationPageModule,
     MemberChipComponentModule,
+    PrivacyPageModule,
     PuzzlePageModule,
     RollingPageModule,
     OutingPageModule,
@@ -67,6 +70,7 @@ import {MyApp} from "./app.component";
     InvitePage,
     LocationPage,
     OutingPage,
+    PrivacyPage,
     PuzzlePage,
     RollingPage,
     TeamPage,

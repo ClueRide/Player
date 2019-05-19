@@ -11,6 +11,7 @@ import {AboutPage} from "../pages/about/about";
 import {BadgesPage} from "../pages/badges/badges";
 import {HomePage} from "../pages/home/home";
 import {OutingPage} from "../pages/outing/outing";
+import {PrivacyPage} from "../pages/privacy/privacy";
 import {RollingPage} from "../pages/rolling/rolling";
 import {TeamPage} from "../pages/team/team-page";
 
@@ -58,6 +59,7 @@ export class MyApp {
       { title: 'Badges', component: BadgesPage },
       { title: 'Team', component: TeamPage },
       { title: 'Play Game', component: RollingPage },
+      { title: 'Privacy', component: PrivacyPage },
       { title: 'About', component: AboutPage },
     ];
 
