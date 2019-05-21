@@ -34,11 +34,12 @@ export class MyApp {
     public appStateService: AppStateService,
     public platformService: PlatformStateService,
   ) {
-    this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      console.log("Platform ready");
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       if (!this.platformService.runningLocal()) {
@@ -48,9 +49,12 @@ export class MyApp {
 
       /* Handles the return to the app after logging in at external site. */
       (<any>window).handleOpenURL = (url) => {
-        console.log("Redirecting custom scheme: " + url);
+        console.log("Callback received -- redirecting via custom scheme: " + url);
         Auth0Cordova.onRedirectUri(url);
-      }
+      };
+
+      this.checkRegistrationState();
+
     });
 
     this.pages = [
@@ -77,7 +81,12 @@ export class MyApp {
   }
 
   ngOnInit() {
+    this.initializeApp();
     console.log("App is initialized");
+  }
+
+  checkRegistrationState(): void {
+
     /* URL Scheme determines the URL where we respond to callbacks from Identity Provider. */
     this.authService.setUrlScheme("com.clueride.player");
 
@@ -102,7 +111,7 @@ export class MyApp {
 
           pageReadyPromise.then(
             () => {
-              console.log("We think we have a promise fulfilled");
+              console.log("Presentation of initial page is now resolved");
               if (!this.platformService.runningLocal()) {
                 /* Splash screen is native only. */
                 this.splashScreen.hide();
@@ -112,7 +121,6 @@ export class MyApp {
 
         }
       );
-
   }
 
 }
