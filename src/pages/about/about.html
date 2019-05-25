@@ -42,11 +42,11 @@
         <p>Ionic v3 & Angular 5 using Jet Brain's IntelliJ IDEA
       </div>
 
-      <div *ngIf="!platform.runningLocal() && about">
+      <div *ngIf="platform.isNativeMode() && about">
         <p>Version: {{about.version}}</p>
       </div>
 
-      <div *ngIf="platform.runningLocal()">
+      <div *ngIf="!platform.isNativeMode()">
         <p>Running within Browser - version info not available</p>
       </div>
 

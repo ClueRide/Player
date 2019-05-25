@@ -3,7 +3,11 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AppVersion} from "@ionic-native/app-version";
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
-import {ComponentsModule, MemberChipComponentModule} from "front-end-common";
+import {
+  ComponentsModule,
+  MemberChipComponentModule,
+  RegistrationPage
+} from "front-end-common";
 import {IonicApp, IonicErrorHandler, IonicModule} from "ionic-angular";
 import {SummaryComponentsModule} from "../components/components.module";
 
@@ -71,6 +75,7 @@ import {MyApp} from "./app.component";
     LocationPage,
     OutingPage,
     PrivacyPage,
+    RegistrationPage,
     PuzzlePage,
     RollingPage,
     TeamPage,

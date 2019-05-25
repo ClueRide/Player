@@ -25,9 +25,11 @@
 
   <begin-game></begin-game>
 
-  <div id="bdd-only" [hidden]="!platform.runningLocal()">
+  <!-- TODO: Patch up the BDD stuff (BDD-2).
+  <div id="bdd-only" [hidden]="shouldHideBDD()">
     <div class="section-heading">Test Only</div>
     <button class="bdd-only" ion-button (click) = "auth.logout()">De-Register</button>
   </div>
+  -->
 
 </ion-content>

@@ -2,10 +2,8 @@ import {App, NavController} from "ionic-angular";
 import {AppState} from "./app-state";
 import {Injectable} from "@angular/core";
 import {
-  ConfirmationState,
   InviteService,
   OutingService,
-  ProfileConfirmationService,
   RegistrationPage,
   SessionInviteState
 } from "front-end-common";
@@ -29,27 +27,8 @@ export class AppStateService {
   constructor(
     public app: App,
     public inviteService: InviteService,
-    public profileConfirmationService: ProfileConfirmationService,
     private outingService: OutingService,
   ) {
-    /** Add ourselves to the list of profile listeners. */
-    profileConfirmationService.confirmationState$.subscribe(
-      (confirmationState) => {
-        this.respondToConfirmationStateChange(confirmationState);
-      }
-    );
-  }
-
-  /**
-   * Listens for a confirmation event and when the right event occurs,
-   * evaluates which is the next page to present.
-   */
-  public respondToConfirmationStateChange(confirmationState: ConfirmationState) {
-    if (confirmationState.authenticated && confirmationState.confirmed) {
-      this.checkInviteIsAccepted()
-        .then()
-        .catch();
-    }
   }
 
   /**

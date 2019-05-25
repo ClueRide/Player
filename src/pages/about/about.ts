@@ -31,7 +31,7 @@ export class AboutPage {
 
   ngOnInit(): void {
     /* Retrieve the Version information if we have Cordova available. */
-    if (!this.platform.runningLocal()) {
+    if (this.platform.isNativeMode()) {
       this.appVersion.getVersionNumber()
         .then(
           (version) => {
