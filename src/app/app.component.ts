@@ -1,7 +1,11 @@
-import {AppState} from "../providers/app-state/app-state";
 import {AppStateService} from "../providers/app-state/app-state.service";
-import Auth0Cordova from "@auth0/cordova";
-import {AuthService, AuthState, PlatformStateService} from "front-end-common";
+import {
+  ConfirmPage,
+  PlatformStateService,
+  RegistrationPage,
+  RegStateKey,
+  RegStateService,
+} from "front-end-common";
 import {Component, ViewChild} from "@angular/core";
 import {Nav, Platform} from "ionic-angular";
 import {SplashScreen} from "@ionic-native/splash-screen";
@@ -14,6 +18,7 @@ import {OutingPage} from "../pages/outing/outing";
 import {PrivacyPage} from "../pages/privacy/privacy";
 import {RollingPage} from "../pages/rolling/rolling";
 import {TeamPage} from "../pages/team/team-page";
+import {filter, find} from "rxjs/operators";
 
 @Component({
   templateUrl: 'app.html'
@@ -30,9 +35,9 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public authService: AuthService,
     public appStateService: AppStateService,
     public platformService: PlatformStateService,
+    private regStateService: RegStateService,
   ) {
   }
 
@@ -42,19 +47,12 @@ export class MyApp {
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      if (!this.platformService.runningLocal()) {
+      if (this.platformService.isNativeMode()) {
         /* Since this is a cordova native statusbar, only set style if not within a browser (local). */
         this.statusBar.styleDefault();
       }
 
-      /* Handles the return to the app after logging in at external site. */
-      (<any>window).handleOpenURL = (url) => {
-        console.log("Callback received -- redirecting via custom scheme: " + url);
-        Auth0Cordova.onRedirectUri(url);
-      };
-
-      this.checkRegistrationState();
-
+      this.setupRegStateResponse();
     });
 
     this.pages = [
@@ -66,6 +64,53 @@ export class MyApp {
       { title: 'Privacy', component: PrivacyPage },
       { title: 'About', component: AboutPage },
     ];
+
+  }
+
+  /**
+   * Triggers the check of a Registration State to make sure our Access Token is ready.
+   *
+   * If registration/confirmation are required, we provide the pages from within our navigation scheme;
+   * those pages will feed back into changes of the Registration State that we pick up via the stream.
+   */
+  private setupRegStateResponse(): void {
+
+    const regStateObservable = this.regStateService.requestRegState(
+      "com.clueride.player"
+    );
+
+    /* Handle Registration -- generally, a one-time occurrence, but there are re-tries. */
+    regStateObservable.pipe(
+      filter(regState => regState.state === RegStateKey.REGISTRATION_REQUIRED)
+    ).subscribe(regState => {
+      console.log("We need to show the Registration Page");
+      this.nav.setRoot(RegistrationPage)
+        .then()
+        .catch(error => console.error("Did not get Registration Page", error));
+    });
+
+    /* Handle Profile Confirmation -- generally, a one-time occurrence, but there are re-tries. */
+    regStateObservable.pipe(
+      filter(regState => regState.state === RegStateKey.CONFIRMATION_REQUIRED)
+    ).subscribe( regState => {
+        console.log("We need to show the Confirmation Page");
+        this.nav.setRoot(ConfirmPage)
+          .then()
+          .catch(error => console.error("Did not get Registration Page", error));
+      }
+    );
+
+    /* Handle Active Session -- typical case. */
+    regStateObservable.pipe(
+      find(regState => regState.state === RegStateKey.ACTIVE)
+    ).subscribe(regState => {
+        console.log("Active by the grace of", regState.source );
+        /* Proceed with the application. */
+        this.appStateService.checkInviteIsAccepted()
+          .then()
+          .catch();
+      }
+    );
 
   }
 
@@ -83,44 +128,6 @@ export class MyApp {
   ngOnInit() {
     this.initializeApp();
     console.log("App is initialized");
-  }
-
-  checkRegistrationState(): void {
-
-    /* URL Scheme determines the URL where we respond to callbacks from Identity Provider. */
-    this.authService.setUrlScheme("com.clueride.player");
-
-    let pageReadyPromise: Promise<void>;
-
-    this.authService.getRegistrationState()
-      .take(1)
-      .subscribe(
-        (authState: AuthState) => {
-          switch (authState) {
-            case AuthState.UNREGISTERED:
-              pageReadyPromise = this.appStateService.prepareAndShowPage(AppState.UNREGISTERED);
-              break;
-            case AuthState.REGISTERED:
-              console.log("ngOnInit(): we're registered");
-              pageReadyPromise = this.appStateService.checkInviteIsAccepted();
-              break;
-            default:
-              console.log("Unexpected Registration State: " + AuthState[authState]);
-              break;
-          }
-
-          pageReadyPromise.then(
-            () => {
-              console.log("Presentation of initial page is now resolved");
-              if (!this.platformService.runningLocal()) {
-                /* Splash screen is native only. */
-                this.splashScreen.hide();
-              }
-            }
-          );
-
-        }
-      );
   }
 
 }
