@@ -22,8 +22,6 @@ export class InvitePage {
 
   constructor(
     inviteService: InviteService,
-    public navCtrl: NavController,
-    public navParams: NavParams,
     public titleService: Title,
   ) {
     this.inviteService = inviteService;
