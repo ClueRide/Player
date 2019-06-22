@@ -14,13 +14,9 @@
 
   <outing-summary></outing-summary>
 
-  <ion-card>
-    <ion-card-header>Registered As</ion-card-header>
-    <ion-card-content>
-      <profile-summary [profile]="member"></profile-summary>
-    </ion-card-content>
-  </ion-card>
-
+  <ion-label>Registered As</ion-label>
+  <member-chip [member]="member"></member-chip>
+  
   <badge-summary></badge-summary>
 
   <begin-game></begin-game>

@@ -4,9 +4,11 @@
     <div class="section-heading">Badges</div>
   </a>
 
-<!--
+  <span id="progress" *ngFor="let chip of chips">
+    <progress-chip [chip]="chip"></progress-chip>
+  </span>
 
-TODO: Turn this into a component supported by Guide Event Service. Maybe PLAY-50?
+<!-- TODO: Turn this into a component supported by Guide Event Service. Maybe PLAY-50?
 
   <div id="guide-capability">
     <ng-template [ngIf]="isGuide()" [ngIfElse]="notGuide">
