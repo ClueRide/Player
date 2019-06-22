@@ -8,6 +8,8 @@ import {InviteListComponent} from './invite-list/invite-list';
 import {OutingSummaryComponent} from "./outing-summary/outing-summary";
 import {PinnedMapComponent} from './pinned-map/pinned-map';
 import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
+import { ProgressChipComponent } from './progress-chip/progress-chip';
+import { RegisteredAsComponent } from './registered-as/registered-as';
 
 @NgModule({
 	declarations: [
@@ -17,6 +19,8 @@ import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
     InviteListComponent,
     PinnedMapComponent,
     ProfileSummaryComponent,
+    ProgressChipComponent,
+    RegisteredAsComponent,
   ],
 	imports: [
     IonicPageModule,
@@ -29,6 +33,8 @@ import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
     InviteListComponent,
     PinnedMapComponent,
     ProfileSummaryComponent,
+    ProgressChipComponent,
+    RegisteredAsComponent,
   ]
 })
 

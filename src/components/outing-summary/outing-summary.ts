@@ -19,6 +19,7 @@ export class OutingSummaryComponent
 implements AfterViewInit {
 
   outing: OutingView;
+  outingTense: "past" | "present" | "future";
   private outingSubscription: Subscription;
 
   constructor(
@@ -26,12 +27,22 @@ implements AfterViewInit {
     private outingService: OutingService,
   ) {
     this.outing = <any>{};
+    this.outingTense = "present";
   }
 
   ngAfterViewInit() {
     this.outingSubscription = this.outingService.getSessionOuting().subscribe(
       (response) => {
         this.outing = response;
+        let today = new Date();
+        let scheduledDate = new Date(this.outing.scheduledTime);
+        if (scheduledDate.getDay() === today.getDay()) {
+          this.outingTense = "present";
+        } else if (scheduledDate > today) {
+          this.outingTense = "future";
+        } else if (scheduledDate < today) {
+          this.outingTense = "past";
+        }
       }
     );
   }

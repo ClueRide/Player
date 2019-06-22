@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Badge, BadgeService} from "front-end-common";
 import {BadgesPage} from "../../pages/badges/badges";
 import {NavController} from "ionic-angular";
+import {BadgeProgressService, BadgeProgress} from "front-end-common";
 
 /**
  * Generated class for the BadgeSummaryComponent component.
@@ -15,10 +16,12 @@ import {NavController} from "ionic-angular";
 })
 export class BadgeSummaryComponent {
   badges: Array<Badge>;
+  chips: Array<BadgeProgress>;
 
   constructor(
     private badgeService: BadgeService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private badgeProgressService: BadgeProgressService,
   ) {
   }
 
@@ -27,6 +30,12 @@ export class BadgeSummaryComponent {
     this.badgeService.getList().subscribe(
       (response) => {
         this.badges = response;
+      }
+    );
+
+    this.badgeProgressService.getProgressChips().subscribe(
+      (response) => {
+        this.chips = response;
       }
     );
   }
