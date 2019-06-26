@@ -4,6 +4,7 @@ import {AppVersion} from "@ionic-native/app-version";
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {StatusBar} from "@ionic-native/status-bar";
 import {
+  BadgesPerLevelModule,
   ComponentsModule,
   MemberChipComponentModule,
   RegistrationPage
@@ -51,6 +52,7 @@ import {MyApp} from "./app.component";
     AboutPageModule,
     AnswerPageModule,
     BadgesPageModule,
+    BadgesPerLevelModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     ComponentsModule.forRoot(),

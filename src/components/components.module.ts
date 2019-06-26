@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {IonicPageModule} from 'ionic-angular';
 
 import {BadgeSummaryComponent} from "./badge-summary/badge-summary";
+import {BadgesPerLevelModule} from "front-end-common";
 import {BeginGameComponent} from "./begin-game/begin-game";
 import {InviteListComponent} from './invite-list/invite-list';
 import {OutingSummaryComponent} from "./outing-summary/outing-summary";
@@ -23,6 +24,7 @@ import { RegisteredAsComponent } from './registered-as/registered-as';
     RegisteredAsComponent,
   ],
 	imports: [
+    BadgesPerLevelModule,
     IonicPageModule,
 	  CommonModule
   ],
