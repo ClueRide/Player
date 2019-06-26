@@ -14,6 +14,8 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 
+@import '../../../front-end-common/src/shared-style.scss';
+
 .scroll-content {
   background-image: linear-gradient(to bottom, #7FFFFF 0%, #BFFFFF 51%);
 }
