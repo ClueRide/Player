@@ -55,6 +55,10 @@ export class LoadStateService {
     return this.allCachedUp;
   }
 
+  public getLoadStateObservable(): Observable<boolean> {
+    return this.loadStateObservable;
+  }
+
   /**
    * In sequence, brings in the entire set of data for a course.
    */
@@ -125,7 +129,7 @@ export class LoadStateService {
         this.allCachedUp = true;
 
         /* Turns on SSE against our session's Outing ID. */
-        // TODO: When does this turn off? Application life-cycle?
+        // TODO: PLAY-22 When does this turn off? Application life-cycle?
         this.serverEventsService.initializeSubscriptions(
           this.outing.id
         );

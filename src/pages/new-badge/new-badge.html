@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>You've Earned a New Badge</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- Badge ID: {{badge.id}} -->
+  <div class="badge-image">
+    <a [attr.href]="badge.criteriaUrl">
+      <img src="{{badge.imageUrl}}"/>
+    </a>
+  </div>
+
+  <div class="bottom-buttons">
+    <button ion-button color="" (click)="dismiss()">Close</button>
+  </div>
+
+</ion-content>
