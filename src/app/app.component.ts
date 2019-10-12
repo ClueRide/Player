@@ -36,7 +36,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public appStateService: AppStateService,
-    public platformService: PlatformStateService,
+    public platformStateService: PlatformStateService,
     private regStateService: RegStateService,
   ) {
   }
@@ -47,7 +47,7 @@ export class MyApp {
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      if (this.platformService.isNativeMode()) {
+      if (this.platformStateService.isNativeMode()) {
         /* Since this is a cordova native statusbar, only set style if not within a browser (local). */
         this.statusBar.styleDefault();
       }
@@ -82,7 +82,7 @@ export class MyApp {
     /* Handle Registration -- generally, a one-time occurrence, but there are re-tries. */
     regStateObservable.pipe(
       filter(regState => regState.state === RegStateKey.REGISTRATION_REQUIRED)
-    ).subscribe(regState => {
+    ).subscribe(() => {
       console.log("We need to show the Registration Page");
       this.nav.setRoot(RegistrationPage)
         .then()
@@ -92,7 +92,7 @@ export class MyApp {
     /* Handle Profile Confirmation -- generally, a one-time occurrence, but there are re-tries. */
     regStateObservable.pipe(
       filter(regState => regState.state === RegStateKey.CONFIRMATION_REQUIRED)
-    ).subscribe( regState => {
+    ).subscribe(() => {
         console.log("We need to show the Confirmation Page");
         this.nav.setRoot(ConfirmPage)
           .then()

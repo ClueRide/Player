@@ -11,6 +11,8 @@ import {PinnedMapComponent} from './pinned-map/pinned-map';
 import {ProfileSummaryComponent} from "./profile-summary/profile-summary";
 import { ProgressChipComponent } from './progress-chip/progress-chip';
 import { RegisteredAsComponent } from './registered-as/registered-as';
+import { NewBadgePopupComponent } from './new-badge-popup/new-badge-popup';
+import { PopupMonitorComponent } from './popup-monitor/popup-monitor';
 
 @NgModule({
 	declarations: [
@@ -22,6 +24,8 @@ import { RegisteredAsComponent } from './registered-as/registered-as';
     ProfileSummaryComponent,
     ProgressChipComponent,
     RegisteredAsComponent,
+    NewBadgePopupComponent,
+    PopupMonitorComponent,
   ],
 	imports: [
     BadgesPerLevelModule,
@@ -37,6 +41,8 @@ import { RegisteredAsComponent } from './registered-as/registered-as';
     ProfileSummaryComponent,
     ProgressChipComponent,
     RegisteredAsComponent,
+    NewBadgePopupComponent,
+    PopupMonitorComponent,
   ]
 })
 

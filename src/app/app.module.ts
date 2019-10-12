@@ -24,6 +24,7 @@ import {InvitePageModule} from "../pages/invite/invite.module";
 import {LocationPage} from "../pages/location/location";
 import {LocationPageModule} from "../pages/location/location.module";
 import {MarkerService} from '../providers/marker-service/marker-service';
+import {NewBadgePageModule} from "../pages/new-badge/new-badge.module";
 import {OutingPage} from "../pages/outing/outing";
 import {OutingPageModule} from "../pages/outing/outing.module";
 import {PrivacyPage} from "../pages/privacy/privacy";
@@ -59,6 +60,7 @@ import {MyApp} from "./app.component";
     InvitePageModule,
     LocationPageModule,
     MemberChipComponentModule,
+    NewBadgePageModule,
     PrivacyPageModule,
     PuzzlePageModule,
     RollingPageModule,

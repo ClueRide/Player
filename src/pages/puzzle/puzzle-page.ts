@@ -37,10 +37,11 @@ export class PuzzlePage {
   }
 
   ionViewDidEnter() {
-    console.log("PuzzlePage.ionViewDidEnter");
+    let puzzleId = this.navParams.get('id');
+    console.log("PuzzlePage.ionViewDidEnter; puzzleId = ", puzzleId);
     this.titleService.setTitle("Puzzle");
     this.puzzle = this.puzzleService.getPuzzle(
-      this.navParams.get('id')
+      puzzleId
     );
   }
 

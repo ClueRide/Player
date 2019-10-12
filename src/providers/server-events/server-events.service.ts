@@ -1,11 +1,10 @@
 import {AnswerSummary} from "../answer-summary/answer-summary";
+import {BadgeEvent} from "../../components/badge-event/badge-event";
 import {EventSourcePolyfill, OnMessageEvent} from "ng-event-source";
-import {fromEvent} from "rxjs/observable/fromEvent";
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
-import {TokenService} from "front-end-common";
-import {tap} from "rxjs/operators/tap";
+import {TokenService, ProfileService} from "front-end-common";
 
 const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
 
@@ -16,13 +15,20 @@ const gameStateUrl: string = 'http://sse.clueride.com/game-state-broadcast';
 export class ServerEventsService {
 
   private eventSource: EventSourcePolyfill;
-  private answerSummary$: Observable<OnMessageEvent>;
+
+  private answerSummary$: Subject<OnMessageEvent>;
+  readonly badgeEvent$: Subject<string>;
   private gameStateEvent$: Subject<OnMessageEvent>;
+  private tetherEvent$: Subject<OnMessageEvent>;
 
   constructor(
     private tokenService: TokenService,
+    private profileService: ProfileService,
   ) {
+    this.answerSummary$ = new Subject<OnMessageEvent>();
+    this.badgeEvent$ = new Subject<string>();
     this.gameStateEvent$ = new Subject<OnMessageEvent>();
+    this.tetherEvent$ = new Subject<OnMessageEvent>();
   }
 
   /**
@@ -46,11 +52,22 @@ export class ServerEventsService {
         }
       );
 
-      /* Standard event definitions. */
+      /* All custom message types fire the `onmessage` event for our chosen EventSource polyfill. */
       this.eventSource.onmessage = (
-        (messageEvent: OnMessageEvent) => {
-          console.log("SSE Message: " + JSON.stringify(messageEvent.data));
-          this.gameStateEvent$.next(messageEvent);
+        (messageEvent: MessageEvent) => {
+          console.log("SSE Message (type " + messageEvent.type + "): " + JSON.stringify(messageEvent.data));
+          /* Handle the various Named Messages. */
+          if (messageEvent.type === "tether") {
+            this.tetherEvent$.next(messageEvent);
+          } else if (messageEvent.type === "message" || messageEvent.type === "game_state") {
+            this.gameStateEvent$.next(messageEvent);
+          } else if (messageEvent.type === "badge-award") {
+            this.badgeEvent$.next(messageEvent.data);
+          } else if (messageEvent.type === "answer-summary") {
+            this.answerSummary$.next(messageEvent);
+          } else {
+            console.error("Unrecognized Message Type: ", messageEvent.type);
+          }
         }
       );
 
@@ -66,19 +83,6 @@ export class ServerEventsService {
         }
       );
 
-      // TODO: I haven't yet gotten this to work; currently passing the message from `.onMessage`.
-      /* Custom event definitions. */
-      fromEvent(
-        this.eventSource,
-        'game-state'
-      ).pipe(tap(() => console.log("Got Game State Event")))
-        .subscribe(this.gameStateEvent$.next);
-
-      this.answerSummary$ = fromEvent(
-        this.eventSource,
-        'answer-summary'
-      );
-
     }
 
   }
@@ -91,6 +95,17 @@ export class ServerEventsService {
       event => {
         return JSON.parse(event.data).answerSummary;
       }
+    );
+  }
+
+  public getBadgeEventObservable(): Observable<BadgeEvent> {
+    return this.badgeEvent$.map(
+      eventData => {
+        return JSON.parse(eventData);
+      }
+    ).filter(
+      /* Check that this badge award is for this session's user. */
+      badgeEvent => (badgeEvent.userId === this.profileService.member.badgeOSId)
     );
   }
 
