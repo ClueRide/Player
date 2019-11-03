@@ -61,8 +61,7 @@ export class PageRoutingService {
     );
   }
 
-  // TODO: PLAY-60 Begin/Resume
-  public beginGame(): void {
+  public showGame(): void {
     let nav = <NavController>this.app.getRootNavById('n4');
     this.gameStateService.requestGameState()
       .take(1)
