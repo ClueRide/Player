@@ -1,9 +1,30 @@
-<!-- Generated template for the BeginGameComponent component -->
-<div class="begin-game">
-  <div class="section-heading">
-    Let's Play
-  </div>
-  <button ion-button (click) = "beginGame()">
-    <span class="button-inner">Begin Game</span>
-  </button>
+<div [ngSwitch]="gameStateService.getOutingState()" class="begin-game">
+
+  <ng-template [ngSwitchCase]= "'PENDING'">
+    <div class="section-heading">
+      Awaiting Start
+    </div>
+    <button ion-button (click) = "showGame()">
+      <span class="button-inner">View Start</span>
+    </button>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]= "'IN_PROGRESS'">
+    <div class="section-heading">
+      Back to Game
+    </div>
+    <button ion-button (click) = "showGame()">
+      <span class="button-inner">Resume</span>
+    </button>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]= "'COMPLETE'">
+    <div class="section-heading">
+      Course Completed
+    </div>
+    <button ion-button (click) = "showGame()">
+      <span class="button-inner">Review Course</span>
+    </button>
+  </ng-template>
+
 </div>

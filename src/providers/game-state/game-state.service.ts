@@ -20,6 +20,8 @@ export class GameStateService {
 
   private sseSubscription: Subscription;
 
+  private cachedGameState: GameState;
+
   constructor(
     private http: HttpClient,
     private httpService: HttpService,
@@ -29,6 +31,17 @@ export class GameStateService {
     this.puzzleEvent$ = new Subject<GameState>();
     this.rollingEvent$ = new Subject<GameState>();
     this.setupSseEventSubscription();
+
+    this.cachedGameState = {
+      teamAssembled: false,
+      rolling: false,
+      nextLocationName: '',
+      outingState: 'PENDING',
+      pathIndex: -1,
+      locationId: null,
+      puzzleId: null
+    }
+
   }
 
   setupSseEventSubscription() {
@@ -49,6 +62,7 @@ export class GameStateService {
   updateFromSSE(gameStateEvent: any) {
     const gameState: GameState = gameStateEvent.gameState;
     const eventType = gameStateEvent.event;
+    this.cachedGameState = gameState;
 
     /* Feed one of the two channels based on the event type. */
     switch(eventType) {
@@ -91,10 +105,16 @@ export class GameStateService {
       }
     ).subscribe(
       (response) => {
-        this.gameStateSubject.next(<GameState>response);
+        const gameState: GameState = <GameState>response;
+        this.cachedGameState = gameState;
+        this.gameStateSubject.next(gameState);
       }
     );
     return this.gameStateObservable;
+  }
+
+  getOutingState(): string {
+    return this.cachedGameState.outingState;
   }
 
   ngOnDestroy() {
