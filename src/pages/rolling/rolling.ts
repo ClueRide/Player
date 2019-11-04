@@ -34,6 +34,7 @@ const BLUE_LINE = {
 export class RollingPage {
   map: any;
   edgeLayer: any;
+  title: string = '';
 
   /* Public members. */
   outing: OutingView;
@@ -75,7 +76,22 @@ export class RollingPage {
 
   ionViewDidEnter() {
     console.log("RollingPage.ionViewDidEnter");
-    this.titleService.setTitle("Rolling");
+    switch (this.gameStateService.getOutingState()) {
+      case 'PENDING_ARRIVAL':
+        this.title = 'Start Location';
+        break;
+
+      case 'IN_PROGRESS':
+      default:
+        this.title = 'Rolling';
+        break;
+
+      case 'COMPLETE':
+        this.title = 'Game Complete';
+        break;
+    }
+    this.titleService.setTitle(this.title);
+
   }
 
   public prepareRollingMap() {
@@ -158,8 +174,15 @@ export class RollingPage {
     marker.addTo(this.edgeLayer);
   }
 
+  /**
+   * Tells whether the current session is associated with a Guide.
+   */
   public isGuide(): boolean {
     return this.guideEventService.isCurrentMemberGuide();
+  }
+
+  public isGameStarted(): boolean {
+    return this.gameStateService.isGameStarted();
   }
 
   public signalArrival() {

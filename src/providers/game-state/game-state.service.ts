@@ -36,7 +36,7 @@ export class GameStateService {
       teamAssembled: false,
       rolling: false,
       nextLocationName: '',
-      outingState: 'PENDING',
+      outingState: 'PENDING_ARRIVAL',
       pathIndex: -1,
       locationId: null,
       puzzleId: null
@@ -115,6 +115,15 @@ export class GameStateService {
 
   getOutingState(): string {
     return this.cachedGameState.outingState;
+  }
+
+  /**
+   * Tells whether or not the Game has started.
+   *
+   * This implementation based the start of the game on whether "team Assembled" is true.
+   */
+  isGameStarted(): boolean {
+    return this.cachedGameState.teamAssembled;
   }
 
   ngOnDestroy() {
