@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Rolling</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
 <ion-content>
   <div class="map-container" id="rolling-map">
 
-    <div *ngIf="isGuide()">
+    <div *ngIf="isGuide() && isGameStarted()">
       <ion-fab left bottom>
         <button ion-fab mini (tap)="signalArrival()">
           <ion-icon name="add"></ion-icon>
