@@ -55,7 +55,7 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@angular/cli": "^1.6.3",
+    "@angular/cli": "^15.0.0",
     "@ionic/app-scripts": "3.1.0",
     "awesome-typescript-loader": "^3.4.1",
     "git-rev-sync": "^1.12.0",
